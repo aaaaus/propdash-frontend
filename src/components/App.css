@@ -1,0 +1,48 @@
+body {
+  margin:0;
+  padding-top: 0vh;
+}
+
+#nav-div {
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: blue;
+  background-color: #b1c9ef;
+  height: 5vh;
+  position: fixed;
+  width: 100%
+}
+
+#nav-offset {
+  height: 5vh;
+}
+
+#dashContainer {
+  /* margin: 0 0 0 0; */
+  /* margin-top: 100px; */
+}
+
+#sidebar {
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: pink;
+  height: 95vh;
+  width: 30vw;
+}
+
+#propSelector {
+  box-sizing: border-box;
+  height: 30vh;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#unitDetail {
+  box-sizing: border-box;
+  height: 90vh;
+  border-width: 1px;
+  border-style: solid;
+  border-color: maroon;
+}
