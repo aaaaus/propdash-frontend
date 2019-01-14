@@ -28,21 +28,22 @@ body {
   border-width: 1px;
   border-style: solid;
   border-color: pink;
-  height: 95vh;
-  width: 30vw;
+  /* height: 95vh; */
+  /* width: 30vw; */
 }
 
-#propSelector {
+#contentContainer {
   box-sizing: border-box;
-  height: 30vh;
   border-width: 1px;
   border-style: solid;
+  border-color: pink;
 }
 
-#unitDetail {
-  box-sizing: border-box;
-  height: 90vh;
+.unit-div {
+  display: inline-block;
   border-width: 1px;
   border-style: solid;
-  border-color: maroon;
+  border-color: cyan;
+
+  width: 50px;
 }
