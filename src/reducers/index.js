@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
 
+import usersReducer from './usersReducer';
+
 const initialState = {
   units: [],
-  isLoaded: false
+  isLoaded: false,
+  selectUnit: null
 }
 
 // const selectedUnitReducer = (state = initialState, action) => {
@@ -29,6 +32,8 @@ const unitsReducer = (state = initialState, action) => {
       return { ...state, units: [...state.units, ...action.payload] };
     case "FETCHED_UNITS":
       return { ...state, isLoaded: true }
+    case "SELECT_UNIT":
+      return { ...state, selectUnit: action.payload}
     default:
       return state;
   }
@@ -36,5 +41,6 @@ const unitsReducer = (state = initialState, action) => {
 
 export default combineReducers({
   unit: unitsReducer,
+  users: usersReducer
   // selectedUnit: selectedUnitReducer
 })

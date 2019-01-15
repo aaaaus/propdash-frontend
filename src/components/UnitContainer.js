@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchUnits } from '../actions';
+import { fetchUnits, selectUnit } from '../actions';
 import Unit from './Unit';
 
 class UnitContainer extends React.Component {
@@ -13,10 +13,11 @@ class UnitContainer extends React.Component {
   renderUnits = () => {
     if (this.props.isLoaded) {
       // return this.props.units.map(unit => `${unit.number}, `)
-      return this.props.units.map(unit => <Unit unit={unit} />)
+      return this.props.units.map(unit => <Unit key={unit.id} unit={unit} selectUnit={this.props.selectUnit} />)
+      // return this.props.units.map(unit => <button key={unit.id} onClick={() => this.props.selectUnit(unit)}>{unit.number}</button>)
     }
     else
-      return "NOT READY"
+      return "LOADING UNITS..."
   }
 
   render() {
@@ -24,7 +25,7 @@ class UnitContainer extends React.Component {
     return(
       <div>
         <h3>UnitContainer</h3>
-        <p>{this.renderUnits()}</p>
+        {this.renderUnits()}
       </div>
     )
   }
@@ -38,4 +39,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchUnits: fetchUnits })(UnitContainer);
+export default connect(mapStateToProps, { fetchUnits: fetchUnits, selectUnit: selectUnit })(UnitContainer);

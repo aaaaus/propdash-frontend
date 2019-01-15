@@ -1,36 +1,34 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 import './App.css';
 
 import Nav from './Nav';
-import PropertyContainer from './PropertyContainer'
-import UnitDetail from './UnitDetail'
-import FilterContainer from './FilterContainer'
-import UnitContainer from './UnitContainer'
+import Dash from './Dash';
 
-const App = () => {
+import LoginForm from './LoginForm';
+import NotFound from './NotFound';
+
+const App = (props) => {
+
+  console.log('%c APP Props: ', 'color: cyan', props)
 
   return (
-    <div className="App">
+    <Fragment>
 
       <Nav />
       <div id="nav-offset" />
-      <div id="dashContainer">
+      <Switch>
+        <Route exact path="/" render={() => <Redirect to="/dash" />} />
 
-        <div id="sidebar">
-          <PropertyContainer />
-          <UnitDetail />
-        </div>
+        <Route exact path="/dash" component={Dash} />
+        <Route exact path="/login" component={LoginForm} />
+        <Route component={NotFound} />
+      </Switch>
 
-        <div id="contentContainer">
-          <FilterContainer />
-          <UnitContainer />
-        </div>
 
-      </div>
-
-    </div>
+    </Fragment>
   )
 };
 
-export default App;
+export default withRouter(App); //withRouter is a HOC that returns a COPY of App w/ React Router
