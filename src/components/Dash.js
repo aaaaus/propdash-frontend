@@ -9,6 +9,8 @@ import UnitContainer from './UnitContainer';
 
 const Dash = () => {
 
+  console.log("INSIDE DASH");
+
   return (
     <Fragment>
       <div id="dashContainer">

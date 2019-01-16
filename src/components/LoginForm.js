@@ -19,40 +19,35 @@ class LoginForm extends React.Component {
 
   render() {
     console.log('%c LOGIN FORM PROPS: ', 'color: red', this.props)
-    return (
+    return this.props.loggedIn ? (
+      <Redirect to="/dash" />
+    ) : (
       <div>
-      {this.props.loggedIn ?
-        <Redirect to="/dash" />
-       :
-       <div>
-         <form
-           onSubmit={this.handleLoginSubmit}
-           // loading={this.props.authenticatingUser}
-           // error={this.props.failedLogin}
+        <form
+         onSubmit={this.handleLoginSubmit}
+         // loading={this.props.authenticatingUser}
+         // error={this.props.failedLogin}
          >
           <input
              label="username"
              placeholder="username"
              name="username"
              onChange={this.handleChange}
-             value={this.state.username}
-            />
+             value={this.state.username} />
           <input
              type="password"
              label="password"
              placeholder="password"
              name="password"
              onChange={this.handleChange}
-             value={this.state.password}
-            />
-           <button type="submit">Login</button>
-         </form>
-       </div>}
+             value={this.state.password} />
+          <button type="submit">Login</button>
+        </form>
       </div>
     )
+  }//end render
 
-  }
-}
+} //end class
 
 const mapStateToProps = (reduxState) => {
   return {
@@ -63,4 +58,10 @@ const mapStateToProps = (reduxState) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { loginUser })(LoginForm))
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginUser: (username, password) => dispatch(loginUser(username, password))
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm))

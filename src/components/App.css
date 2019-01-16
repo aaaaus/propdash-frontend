@@ -15,7 +15,7 @@ body {
 }
 
 #nav-offset {
-  height: 15vh;
+  height: 5vh;
 }
 
 #dashContainer {
@@ -37,6 +37,14 @@ body {
   border-width: 1px;
   border-style: solid;
   border-color: pink;
+}
+
+.prop-div {
+  display: inline-block;
+  width: 30vh;
+  border-width: 1px;
+  border-style: solid;
+  border-color: firebrick;
 }
 
 .unit-div {

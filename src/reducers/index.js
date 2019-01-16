@@ -1,30 +1,14 @@
 import { combineReducers } from 'redux';
 
 import usersReducer from './usersReducer';
+import propertyReducer from './propertyReducer';
+import leaseReducer from './leaseReducer';
 
 const initialState = {
   units: [],
   isLoaded: false,
   selectUnit: null
 }
-
-// const selectedUnitReducer = (state = initialState, action) => {
-//   if (action.type === 'SELECTED_UNIT') {
-//     return action.payload;
-//   }
-//
-//   return state;
-// }
-
-// const unitsReducer = (units = [], action) => {
-//   switch(action.type) {
-//     case "UPDATE_UNITS":
-//       // return { ...state, units: [...state.units, action.payload] };
-//       return [...units, action.payload]
-//     default:
-//       return units;
-//   }
-// }
 
 const unitsReducer = (state = initialState, action) => {
   switch(action.type) {
@@ -39,8 +23,40 @@ const unitsReducer = (state = initialState, action) => {
   }
 }
 
+const initialFilterState = {
+  filterOccupied: false,
+  filterNotice: false,
+  filterVacant: false
+}
+
+const filterReducer = (state = initialFilterState, action) => {
+  switch(action.type) {
+    case "FILTER_OCCUPIED":
+      return { ...state, filterOccupied: !state.filterOccupied }
+    case "FILTER_NOTICE":
+      return { ...state, filterNotice: !state.filterNotice }
+    case "FILTER_VACANT":
+      return { ...state, filterVacant: !state.filterVacant }
+    default:
+      return state;
+  }
+}
+
+const dataReducer = (dataSelection = null, action) => {
+  switch(action.type) {
+    case "DATA_SELECT":
+    return action.payload
+    default:
+    return dataSelection;
+  }
+}
+
 export default combineReducers({
+  filter: filterReducer,
+  data: dataReducer,
+  property: propertyReducer,
   unit: unitsReducer,
+  lease: leaseReducer,
   users: usersReducer
   // selectedUnit: selectedUnitReducer
 })

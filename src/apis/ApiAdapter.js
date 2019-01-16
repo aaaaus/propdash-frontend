@@ -1,10 +1,13 @@
+const PROPERTY_URL = "http://localhost:4000/api/v1/properties/";
 const UNIT_URL = "http://localhost:4000/api/v1/units/";
-// const CAT_URL = "http://localhost:4000/cat";
+const LEASE_URL = "http://localhost:4000/api/v1/leases/";
+// const RESIDENT_URL = "http://localhost:4000/api/v1/residents/"
 
 export default class ApiAdapter {
-  static getUnit() {
 
-    return fetch(`${UNIT_URL}`, { 
+  static getProperty() {
+
+    return fetch(`${PROPERTY_URL}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
@@ -13,10 +16,26 @@ export default class ApiAdapter {
     .then(res => res.json())
   }
 
-//   static getCat() {
-//     return fetch(`${CAT_URL}`)
-//       .then(res => res.json())
-//       .then(json => json.url)
-//   }
+  static getUnit() {
+
+    return fetch(`${UNIT_URL}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+    .then(res => res.json())
+  }
+
+  static getLease() {
+
+    return fetch(`${LEASE_URL}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+    .then(res => res.json())
+  }
 
 }

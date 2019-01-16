@@ -43,7 +43,7 @@ export const loginUser = (username, password) => {
 export const fetchCurrentUser = () => {
   // takes the token in localStorage and finds out who it belongs to
   return (dispatch) => {
-    dispatch(authenticatingUser()) //tells the app we are fetching
+    dispatch(authenticatingUser) //tells the app we are fetching
     fetch(`http://localhost:4000/api/v1/dash`, {
       method: 'GET',
       headers: {
@@ -51,7 +51,10 @@ export const fetchCurrentUser = () => {
       }
     })
       .then(response => response.json())
-      .then((JSONResponse) => dispatch(setCurrentUser(JSONResponse.user)))
+      .then((JSONResponse) => {
+        console.log("DID I GET HERE???");
+        dispatch(setCurrentUser(JSONResponse.user))
+      })
   }
 }
 
@@ -66,7 +69,7 @@ export const failedLogin = (errorMsg) => ({
 })
 
 // tell our app we're currently fetching
-export const authenticatingUser = () => ({ type: 'AUTHENTICATING_USER' })
+export const authenticatingUser = { type: 'AUTHENTICATING_USER' }
 // export const authenticatingUser = () => {
 //   return { type: 'AUTHENTICATING_USER' }
 // }
