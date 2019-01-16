@@ -9,6 +9,16 @@ class UnitDetail extends React.Component {
     this.props.fetchLeases();
   }
 
+  nameMerge(resident) {
+    const first = resident.first_name
+    const last = resident.last_name
+    return `${first} ${last}`
+  }
+
+  multiRes(array) {
+    return array.map(resident => this.nameMerge(resident)).join(', ')
+  }
+
   renderContent() {
 
     if (!this.props.selectUnit) {
@@ -40,11 +50,13 @@ class UnitDetail extends React.Component {
         )
       }
 
+
+
       return (
         <div>
           <h3>UnitDetail</h3>
           <h4>Lease Info</h4>
-            <span>Lessees: {lease[0].residents[0].first_name} {lease[0].residents[0].last_name}</span><br />
+            <span>Lessees: {this.multiRes(lease[0].residents)} </span><br />
             <span>Lease Term: </span><br />
             <span>Occupants: </span><br />
             <span>Rent: {lease[0].rent}</span><br />

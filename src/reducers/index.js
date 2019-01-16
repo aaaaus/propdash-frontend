@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import usersReducer from './usersReducer';
 import propertyReducer from './propertyReducer';
 import leaseReducer from './leaseReducer';
+import residentReducer from './residentReducer'
 
 const initialState = {
   units: [],
@@ -26,7 +27,8 @@ const unitsReducer = (state = initialState, action) => {
 const initialFilterState = {
   filterOccupied: false,
   filterNotice: false,
-  filterVacant: false
+  filterVacant: false,
+  filterText: ''
 }
 
 const filterReducer = (state = initialFilterState, action) => {
@@ -37,6 +39,8 @@ const filterReducer = (state = initialFilterState, action) => {
       return { ...state, filterNotice: !state.filterNotice }
     case "FILTER_VACANT":
       return { ...state, filterVacant: !state.filterVacant }
+    case "INPUT_CHANGE":
+      return { ...state, filterText: action.payload }
     default:
       return state;
   }
@@ -54,9 +58,11 @@ const dataReducer = (dataSelection = null, action) => {
 export default combineReducers({
   filter: filterReducer,
   data: dataReducer,
+
   property: propertyReducer,
   unit: unitsReducer,
   lease: leaseReducer,
+  resident: residentReducer,
   users: usersReducer
   // selectedUnit: selectedUnitReducer
 })

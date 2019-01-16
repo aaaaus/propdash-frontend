@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { dataSelect, filterOccupied, filterNotice, filterVacant } from '../actions';
+import { dataSelect, filterOccupied, filterNotice, filterVacant, handleInput } from '../actions';
 
 const FilterContainer = (props) => {
 
@@ -23,7 +23,14 @@ const FilterContainer = (props) => {
       <button id="filter-notice" onClick={props.filterNotice}>{props.filterNotStatus ? 'Notice (ON)' : 'Notice'}</button><br />
       <button id="filter-vacant" onClick={props.filterVacant}>{props.filterVacStatus ? 'Vacant (ON)' : 'Vacant'}</button><br />
       <br />
-      <input type="text"></input>
+      <input
+        onChange={props.handleInput}
+        value={props.filterText}
+        type="text"
+        placeholder="search by name"
+        style={{width: "250px"}}
+      >
+      </input>
 
     </div>
   )
@@ -33,8 +40,9 @@ function mapStateToProps(state) {
   return {
     filterOccStatus: state.filter.filterOccupied,
     filterNotStatus: state.filter.filterNotice,
-    filterVacStatus: state.filter.filterVacant
+    filterVacStatus: state.filter.filterVacant,
+    filterText: state.filter.filterText
   }
 }
 
-export default connect(mapStateToProps, { dataSelect, filterOccupied, filterNotice, filterVacant })(FilterContainer);
+export default connect(mapStateToProps, { dataSelect, filterOccupied, filterNotice, filterVacant, handleInput })(FilterContainer);

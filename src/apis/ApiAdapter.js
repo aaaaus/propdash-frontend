@@ -1,7 +1,7 @@
 const PROPERTY_URL = "http://localhost:4000/api/v1/properties/";
 const UNIT_URL = "http://localhost:4000/api/v1/units/";
 const LEASE_URL = "http://localhost:4000/api/v1/leases/";
-// const RESIDENT_URL = "http://localhost:4000/api/v1/residents/"
+const RESIDENT_URL = "http://localhost:4000/api/v1/residents/"
 
 export default class ApiAdapter {
 
@@ -30,6 +30,17 @@ export default class ApiAdapter {
   static getLease() {
 
     return fetch(`${LEASE_URL}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+    .then(res => res.json())
+  }
+
+  static getResident() {
+
+    return fetch(`${RESIDENT_URL}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`

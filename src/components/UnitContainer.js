@@ -1,20 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchUnits, selectUnit } from '../actions';
+import { fetchUnits, fetchLeases, fetchResidents, selectUnit } from '../actions';
 import Unit from './Unit';
 
 class UnitContainer extends React.Component {
 
   componentDidMount() {
     this.props.fetchUnits();
+    this.props.fetchLeases();
+    this.props.fetchResidents();
   }
 
+  //the return here is passed into the final render call for this component
   renderUnits = () => {
     if (this.props.isLoaded && this.props.selectProperty) {
       const property = this.props.selectProperty
-      const filteredUnits = this.filterUnits(property.units)
-      
+      const filteredUnits = this.filterUnits(this.filterByName(property.units))
+
       return filteredUnits.map(unit => <Unit key={unit.id} unit={unit} selectUnit={this.props.selectUnit} />)
     } else {
       return <span>"Select a property..."</span>
@@ -22,7 +25,9 @@ class UnitContainer extends React.Component {
 
   }
 
+  //returns filtered array of units based on three filters that can be turned on/off in state
   filterUnits = (unitArray) => {
+
     return unitArray.filter(unit => {
       const a = this.props.filterOccupied ? unit.status === "occupied" : '';
       const b = this.props.filterNotice ? unit.status === "notice" : '';
@@ -37,21 +42,54 @@ class UnitContainer extends React.Component {
     })
   }
 
+  filterByName = (unitArray) => { //in comes the array of units from the filterUnits function
+    // debugger
+    if (this.props.filterText.length > 0) {
+      //we filter this array based on units that match unit ids
+      return unitArray.filter(unit => {
 
+        //create array of residents with matching criteria
+        const residents = this.props.residents.filter(resident => {
+          const fullName = `${resident.first_name}` + " " + `${resident.last_name}`
+          return fullName.toLowerCase().includes(this.props.filterText.toLowerCase())
+        })
 
-  renderBud = () => {
-    const a = this.props.filterOccupied ? "bud" : '';
-    const b = this.props.filterNotice ? "weis" : '';
-    const c = this.props.filterVacant ? "er" : '';
+        //creates an array of current lease IDs for which there are matching residents
+        const leaseIds = residents.map(resident => {
+          const lease = resident.leases.find(lease => lease.status === "current")
+          return lease.id
+        })
+        //=> [9, 10]
 
-    return a + b + c
-  }
+        let leases = []
+
+        //creates an array of leases based on the leaseIDs found in previous
+        leaseIds.forEach(id => {
+          const lease = this.props.leases.find(lease => lease.id === id )
+          leases.push(lease)
+        })
+
+        //calling leases
+        //=> [{…}, {…}]
+
+        //maps an array of unit IDs from the leases
+        const unitIds = leases.map(lease => lease.unit.id)
+
+        //=> [532, 533]
+
+        return unitIds.includes(unit.id)
+
+      })
+
+    } // if
+    return unitArray
+  } //filterByName
+
 
   render() {
     return(
       <div>
         <h3>UnitContainer</h3>
-        {this.renderBud()}<br />
         {this.renderUnits()}
       </div>
     )
@@ -65,13 +103,18 @@ function mapStateToProps(state) {
     // isLoaded: state.unit.isLoaded
     isLoaded: state.property.isLoaded,
     selectProperty: state.property.selectProperty,
+
+    leases: state.lease.leases,
+    residents: state.resident.residents,
+
     filterOccupied: state.filter.filterOccupied,
     filterNotice: state.filter.filterNotice,
-    filterVacant: state.filter.filterVacant
+    filterVacant: state.filter.filterVacant,
+    filterText: state.filter.filterText
   }
 }
 
-export default connect(mapStateToProps, { fetchUnits: fetchUnits, selectUnit: selectUnit })(UnitContainer);
+export default connect(mapStateToProps, { fetchUnits, fetchLeases, fetchResidents, selectUnit })(UnitContainer);
 
 
 // filterPuppies = () => {
@@ -84,19 +127,3 @@ export default connect(mapStateToProps, { fetchUnits: fetchUnits, selectUnit: se
 //     return pups
 //   }
 // }
-
-// const teams = [
-// 	{name:'Ravens', city:'Baltimore'},
-// 	{name:'Browns', city:'Cleveland'},
-// 	{name:'Colts', city:'Indianapolis'},
-// 	{name:'Giants', city:'New York'},
-// 	{name:'Dolphins', city:'Miami'}
-// ]
-//
-// teams.filter(team => {
-//   const a = true ? team.name.startsWith('R') : null;
-//   const b = false ? team.name.startsWith('B') : null;
-//   const c = true ? team.name.startsWith('G') : null;
-//
-//   return a || b || c
-// })

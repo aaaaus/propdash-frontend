@@ -57,6 +57,25 @@ export const selectLease = (lease) => {
   }
 };
 
+export function fetchResidents() {
+  return (dispatch) => {
+    dispatch({ type: "FETCHING_RESIDENTS" })
+    ApiAdapter.getResident()
+    .then(residentData => {
+      // console.log(propertyData); //confirm data is being received
+      dispatch({ type: "UPDATE_RESIDENTS", payload: residentData })
+      dispatch({ type: "FETCHED_RESIDENTS" })
+    })
+  }
+}
+
+export const selectResident = (resident) => {
+  return {
+    type: 'SELECT_RESIDENT',
+    payload: resident
+  }
+};
+
 //DATA BUTTONS
 
 export const dataSelect = (event) => {
@@ -83,5 +102,14 @@ export const filterNotice = () => {
 export const filterVacant = () => {
   return {
     type: 'FILTER_VACANT'
+  }
+}
+
+//SEARCH FILTER
+
+export const handleInput = (event) => {
+  return {
+    type: 'INPUT_CHANGE',
+    payload: event.target.value
   }
 }
