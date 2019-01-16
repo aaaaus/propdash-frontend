@@ -13,32 +13,45 @@ class UnitContainer extends React.Component {
   renderUnits = () => {
     if (this.props.isLoaded && this.props.selectProperty) {
       const property = this.props.selectProperty
-      return property.units.map(unit => <Unit key={unit.id} unit={unit} selectUnit={this.props.selectUnit} />)
+      const filteredUnits = this.filterUnits(property.units)
+      
+      return filteredUnits.map(unit => <Unit key={unit.id} unit={unit} selectUnit={this.props.selectUnit} />)
     } else {
       return <span>"Select a property..."</span>
     }
-    // if (this.props.isLoaded) {
-    //   // return this.props.units.map(unit => `${unit.number}, `)
-    //   return this.props.units.map(unit => <Unit key={unit.id} unit={unit} selectUnit={this.props.selectUnit} />)
-    //   // return this.props.units.map(unit => <button key={unit.id} onClick={() => this.props.selectUnit(unit)}>{unit.number}</button>)
-    // }
-    // else
-    //   return "LOADING UNITS..."
+
   }
 
-  filterUnits = () => {
-    if (false) { //filter ON
+  filterUnits = (unitArray) => {
+    return unitArray.filter(unit => {
+      const a = this.props.filterOccupied ? unit.status === "occupied" : '';
+      const b = this.props.filterNotice ? unit.status === "notice" : '';
+      const c = this.props.filterVacant ? unit.status === "vacant" : '';
 
-    }
-    else {
+      if (a + b + c != '') {
+        return a || b || c
+      }
+      else {
+        return unitArray
+      }
+    })
+  }
 
-    }
+
+
+  renderBud = () => {
+    const a = this.props.filterOccupied ? "bud" : '';
+    const b = this.props.filterNotice ? "weis" : '';
+    const c = this.props.filterVacant ? "er" : '';
+
+    return a + b + c
   }
 
   render() {
     return(
       <div>
         <h3>UnitContainer</h3>
+        {this.renderBud()}<br />
         {this.renderUnits()}
       </div>
     )
@@ -51,7 +64,10 @@ function mapStateToProps(state) {
     // units: state.unit.units,
     // isLoaded: state.unit.isLoaded
     isLoaded: state.property.isLoaded,
-    selectProperty: state.property.selectProperty
+    selectProperty: state.property.selectProperty,
+    filterOccupied: state.filter.filterOccupied,
+    filterNotice: state.filter.filterNotice,
+    filterVacant: state.filter.filterVacant
   }
 }
 
@@ -68,3 +84,19 @@ export default connect(mapStateToProps, { fetchUnits: fetchUnits, selectUnit: se
 //     return pups
 //   }
 // }
+
+// const teams = [
+// 	{name:'Ravens', city:'Baltimore'},
+// 	{name:'Browns', city:'Cleveland'},
+// 	{name:'Colts', city:'Indianapolis'},
+// 	{name:'Giants', city:'New York'},
+// 	{name:'Dolphins', city:'Miami'}
+// ]
+//
+// teams.filter(team => {
+//   const a = true ? team.name.startsWith('R') : null;
+//   const b = false ? team.name.startsWith('B') : null;
+//   const c = true ? team.name.startsWith('G') : null;
+//
+//   return a || b || c
+// })
