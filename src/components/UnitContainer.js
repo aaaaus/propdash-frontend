@@ -16,7 +16,7 @@ class UnitContainer extends React.Component {
   renderUnits = () => {
     if (this.props.isLoaded && this.props.selectProperty) {
       const property = this.props.selectProperty
-      const filteredUnits = this.filterUnits(this.filterByName(property.units))
+      const filteredUnits = this.filterUnits(this.filterByName(this.sortUnitsByNumber(property.units)))
 
       return filteredUnits.map(unit => <Unit key={unit.id} unit={unit} selectUnit={this.props.selectUnit} />)
     } else {
@@ -85,11 +85,34 @@ class UnitContainer extends React.Component {
     return unitArray
   } //filterByName
 
+  sortUnitsByNumber = (array) => {
+    const num = array[0].number
+    if (isNaN(parseFloat(num.charAt(num.length - 1)))) { //for apartments with "10A" format
+      return array.sort(function (unit1, unit2) {
+      //sort by leading number
+    	if (unit1.number.slice(0,-1) > unit2.number.slice(0,-1)) return 1;
+    	if (unit1.number.slice(0,-1) < unit2.number.slice(0,-1)) return -1;
+      //subsort for trailing letter
+    	if (unit1.number.slice(-1) > unit2.number.slice(-1)) return 1;
+    	if (unit1.number.slice(-1) < unit2.number.slice(-1)) return -1;
+
+      });
+    }
+    else { //for apartments with "901" format
+      return array.sort((unit1, unit2) => parseFloat(unit1.number) - parseFloat(unit2.number))
+    }
+  }
+
+//   homes.sort(function(a, b) {
+//     return parseFloat(a.price) - parseFloat(b.price);
+// });
 
   render() {
     return(
       <div>
         <h3>UnitContainer</h3>
+        <button>Sort By Unit</button><button>Sort By Lease End Date</button>
+        <br /><br />
         {this.renderUnits()}
       </div>
     )
