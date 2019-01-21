@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchLeases, createLease } from '../actions';
+import LeaseInfo from './LeaseInfo.js'
 
 class UnitDetail extends React.Component {
 
@@ -10,24 +11,17 @@ class UnitDetail extends React.Component {
     newStartDate: '',
     newEndDate: '',
     rent: '',
+    leaseType: 'current'
   }
 
-  //this was originally the first call of this, but later UnitContainer added this
-  // componentDidMount() {
-  //   this.props.fetchLeases();
-  // }
-
-  nameMerge(resident) {
-    const first = resident.first_name
-    const last = resident.last_name
-    return `${first} ${last}`
+  //lease type tabs
+  handleLeaseTypeChange = (e) => {
+    const target = e.target.id.split("-")
+    //leaseType-current
+    return this.setState({ [target[0]]: target[1] })
   }
 
-  multiRes(array) {
-    return array.map(resident => this.nameMerge(resident)).join(', ')
-  }
-
-  //form
+  //create form handlers
   handleDateChange = (e) => {
     console.log(e.target.value);
     const date = new Date(e.target.value);
@@ -51,7 +45,7 @@ class UnitDetail extends React.Component {
     const nEnd = this.state.newEndDate
     const nRent = this.state.rent
     const nBalance = 0
-    const nStatus = "current" //later, make this dynamic to reflect future leases
+    const nStatus = "future"
 
     if (nStart && nEnd && nRent) {
         const nBody = {lease: {unit_id: nUnit, start_date: nStart, end_date: nEnd, rent: nRent, account_balance: nBalance, status: nStatus }}
@@ -65,13 +59,64 @@ class UnitDetail extends React.Component {
         })
         .then(resp => resp.json())
         .then(res => {
-          this.props.createLease(res);
+          this.props.createLease(res); //sends to createLease action creators
           this.props.fetchLeases();
         })
     }
   }
 
+  //move out button
+  handleMoveOut = (e) => {
+    e.preventDefault()
+
+    const unit = this.props.selectUnit
+    const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current")[0]
+
+    console.log(unit, lease);
+
+    fetch(`http://localhost:4000/api/v1/leases/${lease.id}`, {
+    method: 'PATCH',
+    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+    body: JSON.stringify({status: "past"})
+    })
+    .then(resp => console.log(resp))
+
+    fetch(`http://localhost:4000/api/v1/units/${unit.id}`, {
+    method: 'PATCH',
+    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+    body: JSON.stringify({status: "vacant"})
+    })
+    .then(resp => console.log(resp))
+    .then()
+  }
+
+  handleMoveIn = (e) => {
+    console.log(e.target);
+  }
+
+  // handleToggleNotice = (e) => {
+  //   console.log(e.target.value)
+  // }
+
+  leaseInfoRender() {
+    return (
+      <LeaseInfo
+        type={this.state.leaseType}
+        unit={this.props.selectUnit}
+        leases={this.props.leases}
+        handleMoveOut={this.handleMoveOut}
+        handleMoveIn={this.handleMoveIn}
+        handleCreateNewLease={this.handleCreateNewLease}
+        handleDateChange={this.handleDateChange}
+        handleChange={this.handleChange}
+        rent={this.state.rent}
+      />
+    )
+  }
+
   renderContent() {
+
+    console.log("LEASE TYPE IS: ", this.state.leaseType);
 
     if (!this.props.selectUnit) {
       return (
@@ -87,16 +132,18 @@ class UnitDetail extends React.Component {
       // console.log(this.props.leases);
 
       const unit = this.props.selectUnit
-      const currentLeases = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current") //should return an array with at most ONE element
-      const lease = currentLeases[0]
+      const currentLease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current")[0]
+      const futureLease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "future")[0]
+      const pastLeases = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "past")
 
-      if (currentLeases.length === 0) {
+      // if (!currentLease) {
+      if (currentLease === 100) {
         // console.log("UNIT DETAIL STATE IS: ", this.state);
         return (
           <div>
             <h3>UnitDetail</h3>
             <p><em>No active lease for this unit</em></p>
-            <button>Create New Lease</button>
+            <button>Create New Future Lease</button>
             <br /><br />
             <form onSubmit={this.handleCreateNewLease}>
               <label htmlFor="start-date">Start date </label>
@@ -105,7 +152,7 @@ class UnitDetail extends React.Component {
               <input type="date" name="newEndDate" id="end-date" onChange={this.handleDateChange} /><br />
               <label htmlFor="end-date">Rent </label>
               <input name="rent" placeholder="Rent" onChange={this.handleChange} value={this.state.rent}></input><br />
-              <button type="submit">Create</button>
+              <button type="submit">Create New Future Lease</button>
             </form>
           </div>
 
@@ -113,18 +160,44 @@ class UnitDetail extends React.Component {
         )
       }
 
+
       return (
         <div>
           <h3>UnitDetail</h3>
-          <h4>Lease Info</h4>
-          <span>Lessees: {this.multiRes(lease.residents)} </span><br />
-          <span>Lease Term: {new Date(lease.start_date * 1000).toLocaleDateString()} - {new Date(lease.end_date * 1000).toLocaleDateString()}</span><br />
-          {/* <span>Occupants: </span><br /> */}
-          <span>Rent: {lease.rent}</span><br />
-          <span>Status: {lease.status.toUpperCase()} </span><br />
-          <span>Balance: {lease.account_balance} </span><br />
+          <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-past">Past Leases</div>
+          <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-current">Current Lease</div>
+          <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-future">Future Lease</div>
           <br />
-          <span><em>Previous Lease | Create Future Lease</em></span><br />
+          <br />
+
+          {this.leaseInfoRender()}
+
+          {/*
+          <div id="current">
+            <span>Lessees: {this.multiRes(currentLease.residents)} </span><br />
+            <span>Lease Term: {new Date(currentLease.start_date * 1000).toLocaleDateString()} - {new Date(currentLease.end_date * 1000).toLocaleDateString()}</span><br />
+            <span>Rent: {currentLease.rent}</span><br />
+            <span>Status: {currentLease.status.toUpperCase()} </span><br />
+            <span>Balance: {currentLease.account_balance} </span><br />
+            <br />
+            <button onClick={this.handleMoveOut}>Move Out</button><br />
+            <span>Lease status will be: PAST</span>
+          </div>
+          */}
+
+          {/*}
+          <div id="future">
+          <span>Lessees: {this.multiRes(futureLease.residents)} </span><br />
+          <span>Lease Term: {new Date(futureLease.start_date * 1000).toLocaleDateString()} - {new Date(futureLease.end_date * 1000).toLocaleDateString()}</span><br />
+          <span>Rent: {futureLease.rent}</span><br />
+          <span>Status: {futureLease.status.toUpperCase()} </span><br />
+          <span>Balance: {futureLease.account_balance} </span><br />
+          <br />
+          <button onClick={this.handleMoveOut}>Move Out</button><br />
+          <span>Lease status will be: PAST</span>
+          </div>
+          */}
+
           <h4>Unit Info</h4>
           <span>Amenities: </span><br />
           <span><a href='/api/v1/print/example.pdf' target='_blank'>Floorplan (PDF)</a></span><br />

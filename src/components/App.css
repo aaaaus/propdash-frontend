@@ -46,3 +46,12 @@ body {
   border-style: solid;
   border-color: firebrick;
 }
+
+.detail-lease-button {
+  display: inline-block;
+  width: 150px;
+  height: 50px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: steelblue;
+}
