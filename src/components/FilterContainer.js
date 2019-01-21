@@ -13,6 +13,7 @@ const FilterContainer = (props) => {
 
       <button id="status" onClick={props.dataSelect}>Status</button>
       <button id="rent" onClick={props.dataSelect}>Rent</button>
+      <button id="ppsf" onClick={props.dataSelect}>$PSF</button>
       <button id="vacant" onClick={props.dataSelect}>Days Vacant</button>
       <button id="market" onClick={props.dataSelect}>Market Rent</button>
       <button id="diff" onClick={props.dataSelect}>Market Rent %Diff</button>

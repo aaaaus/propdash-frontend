@@ -46,13 +46,3 @@ body {
   border-style: solid;
   border-color: firebrick;
 }
-
-.unit-div {
-  display: inline-block;
-  border-width: 1px;
-  border-style: solid;
-  border-color: cyan;
-
-  height: 65px;
-  width: 65px;
-}

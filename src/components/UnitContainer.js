@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import './UnitContainer.css';
+
 import { fetchUnits, fetchLeases, fetchResidents, selectUnit } from '../actions';
 import Unit from './Unit';
 
@@ -33,7 +35,7 @@ class UnitContainer extends React.Component {
       const b = this.props.filterNotice ? unit.status === "notice" : '';
       const c = this.props.filterVacant ? unit.status === "vacant" : '';
 
-      if (a + b + c != '') {
+      if (a + b + c !== '') {
         return a || b || c
       }
       else {
@@ -43,14 +45,16 @@ class UnitContainer extends React.Component {
   }
 
   filterByName = (unitArray) => { //in comes the array of units from the filterUnits function
-    // debugger
+    /////////////
+    //CHANGE TO filterBy and add conditional for which type is active
+    /////////////
     if (this.props.filterText.length > 0) {
       //we filter this array based on units that match unit ids
       return unitArray.filter(unit => {
 
         //create array of residents with matching criteria
         const residents = this.props.residents.filter(resident => {
-          const fullName = `${resident.first_name}` + " " + `${resident.last_name}`
+          const fullName = `${resident.first_name} ${resident.last_name}`
           return fullName.toLowerCase().includes(this.props.filterText.toLowerCase())
         })
 
@@ -86,34 +90,33 @@ class UnitContainer extends React.Component {
   } //filterByName
 
   sortUnitsByNumber = (array) => {
-    const num = array[0].number
+    const num = array[0].number //test first element to see what type of array this is
     if (isNaN(parseFloat(num.charAt(num.length - 1)))) { //for apartments with "10A" format
-      return array.sort(function (unit1, unit2) {
+      const sortedArray = array.sort(function (unit1, unit2) {
       //sort by leading number
-    	if (unit1.number.slice(0,-1) > unit2.number.slice(0,-1)) return 1;
-    	if (unit1.number.slice(0,-1) < unit2.number.slice(0,-1)) return -1;
+    	if (parseInt(unit1.number.slice(0,-1)) > parseInt(unit2.number.slice(0,-1))) return 1;
+    	if (parseInt(unit1.number.slice(0,-1)) < parseInt(unit2.number.slice(0,-1))) return -1;
       //subsort for trailing letter
     	if (unit1.number.slice(-1) > unit2.number.slice(-1)) return 1;
     	if (unit1.number.slice(-1) < unit2.number.slice(-1)) return -1;
-
       });
+      return sortedArray
     }
     else { //for apartments with "901" format
       return array.sort((unit1, unit2) => parseFloat(unit1.number) - parseFloat(unit2.number))
     }
   }
 
-//   homes.sort(function(a, b) {
-//     return parseFloat(a.price) - parseFloat(b.price);
-// });
-
   render() {
     return(
       <div>
         <h3>UnitContainer</h3>
         <button>Sort By Unit</button><button>Sort By Lease End Date</button>
-        <br /><br />
-        {this.renderUnits()}
+        <br />
+        <br />
+        <div className="grid">
+          {this.renderUnits()}
+        </div>
       </div>
     )
   }
@@ -138,15 +141,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { fetchUnits, fetchLeases, fetchResidents, selectUnit })(UnitContainer);
-
-
-// filterPuppies = () => {
-//   const pups = this.state.puppies.filter(p => {
-//     return p.name.toLowerCase().includes(this.state.filterText) || p.breed.toLowerCase().includes(this.state.filterText)
-//   })
-//   if (this.state.goodBoiFilter) {
-//     return this.goodBoiFilter(pups)
-//   } else {
-//     return pups
-//   }
-// }

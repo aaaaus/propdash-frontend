@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchLeases } from '../actions';
+import { fetchLeases, createLease } from '../actions';
 
 class UnitDetail extends React.Component {
 
@@ -12,9 +12,10 @@ class UnitDetail extends React.Component {
     rent: '',
   }
 
-  componentDidMount() {
-    this.props.fetchLeases();
-  }
+  //this was originally the first call of this, but later UnitContainer added this
+  // componentDidMount() {
+  //   this.props.fetchLeases();
+  // }
 
   nameMerge(resident) {
     const first = resident.first_name
@@ -27,13 +28,13 @@ class UnitDetail extends React.Component {
   }
 
   //form
-  handleDateChange = (event) => {
-    console.log(event.target.value);
-    const date = new Date(event.target.value)
-    const epoch = date.getTime()
-    const unix_time = epoch/1000
-    console.log(unix_time); //send this to backend
-    //return this setState blah to blah
+  handleDateChange = (e) => {
+    console.log(e.target.value);
+    const date = new Date(e.target.value);
+    const epoch = date.getTime();
+    const unix_time = epoch/1000;
+    console.log(unix_time);
+    return this.setState({ [e.target.name]: unix_time });
   }
 
   handleChange = (e) => {
@@ -41,14 +42,20 @@ class UnitDetail extends React.Component {
     return this.setState({ [e.target.name]: e.target.value })
   }
 
-  createNewLease() {
+  //refactor later to do it the 'React' way
+  handleCreateNewLease = (e) => {
+    e.preventDefault()
+
+    const nUnit = this.props.selectUnit.id
     const nStart = this.state.newStartDate
     const nEnd = this.state.newEndDate
     const nRent = this.state.rent
+    const nBalance = 0
+    const nStatus = "current" //later, make this dynamic to reflect future leases
 
     if (nStart && nEnd && nRent) {
-        const nBody = {lease: {start_date: nStart, end_date: nEnd, rent: nRent}}
-        fetch('http://localhost:3000/api/v1/sightings', {
+        const nBody = {lease: {unit_id: nUnit, start_date: nStart, end_date: nEnd, rent: nRent, account_balance: nBalance, status: nStatus }}
+        fetch('http://localhost:4000/api/v1/leases', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -56,8 +63,10 @@ class UnitDetail extends React.Component {
           },
           body: JSON.stringify(nBody)
         })
+        .then(resp => resp.json())
         .then(res => {
-          console.log(res)
+          this.props.createLease(res);
+          this.props.fetchLeases();
         })
     }
   }
@@ -78,24 +87,22 @@ class UnitDetail extends React.Component {
       // console.log(this.props.leases);
 
       const unit = this.props.selectUnit
-      const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current")
-      // debugger
+      const currentLeases = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current") //should return an array with at most ONE element
+      const lease = currentLeases[0]
 
-      console.log("YOUR LEASE IS:", lease[0]);
-
-      if (lease.length === 0) {
-        console.log("UNIT DETAIL STATE IS: ", this.state);
+      if (currentLeases.length === 0) {
+        // console.log("UNIT DETAIL STATE IS: ", this.state);
         return (
           <div>
             <h3>UnitDetail</h3>
             <p><em>No active lease for this unit</em></p>
             <button>Create New Lease</button>
             <br /><br />
-            <form>
+            <form onSubmit={this.handleCreateNewLease}>
               <label htmlFor="start-date">Start date </label>
-              <input type="date" name="newStartDate" id="start-date" onChange={this.handleDateChange}  /><br />
+              <input type="date" name="newStartDate" id="start-date" onChange={this.handleDateChange} /><br />
               <label htmlFor="end-date">End date </label>
-              <input type="date" name="newEndDate" id="end-date" /><br />
+              <input type="date" name="newEndDate" id="end-date" onChange={this.handleDateChange} /><br />
               <label htmlFor="end-date">Rent </label>
               <input name="rent" placeholder="Rent" onChange={this.handleChange} value={this.state.rent}></input><br />
               <button type="submit">Create</button>
@@ -110,19 +117,23 @@ class UnitDetail extends React.Component {
         <div>
           <h3>UnitDetail</h3>
           <h4>Lease Info</h4>
-            <span>Lessees: {this.multiRes(lease[0].residents)} </span><br />
-            <span>Lease Term: {new Date(lease[0].start_date * 1000).toLocaleDateString()} - {new Date(lease[0].end_date * 1000).toLocaleDateString()}</span><br />
-            <span>Occupants: </span><br />
-            <span>Rent: {lease[0].rent}</span><br />
-            <span>Status: </span><br />
-            <span>Balance: </span><br />
-            <span>Floorplan: </span><br />
-            <br />
-            <span>Previous Lease</span><br />
-            <span>Create New Lease</span><br />
+          <span>Lessees: {this.multiRes(lease.residents)} </span><br />
+          <span>Lease Term: {new Date(lease.start_date * 1000).toLocaleDateString()} - {new Date(lease.end_date * 1000).toLocaleDateString()}</span><br />
+          {/* <span>Occupants: </span><br /> */}
+          <span>Rent: {lease.rent}</span><br />
+          <span>Status: {lease.status.toUpperCase()} </span><br />
+          <span>Balance: {lease.account_balance} </span><br />
+          <br />
+          <span><em>Previous Lease | Create Future Lease</em></span><br />
+          <h4>Unit Info</h4>
+          <span>Amenities: </span><br />
+          <span><a href='/api/v1/print/example.pdf' target='_blank'>Floorplan (PDF)</a></span><br />
+          <br />
         </div>
       ) //return
+
     } //else
+
   } //renderContent
 
   render() {
@@ -141,7 +152,7 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchLeases })(UnitDetail);
+export default connect(mapStateToProps, { fetchLeases, createLease })(UnitDetail);
 
 
 // function createNewSighting() {

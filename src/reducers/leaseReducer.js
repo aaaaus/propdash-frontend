@@ -9,9 +9,11 @@ const leaseReducer = (state = initialState, action) => {
     case "UPDATE_LEASES":
       return { ...state, leases: [...state.leases, ...action.payload] };
     case "FETCHED_LEASES":
-      return { ...state, isLoaded: true }
+      return { ...state, isLoaded: true };
     case "SELECT_LEASE":
-      return { ...state, selectLease: action.payload}
+      return { ...state, selectLease: action.payload};
+    case "CREATE_LEASE":
+      return { ...state, leases: [...state.leases, action.payload] };
     default:
       return state;
   }

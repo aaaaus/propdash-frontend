@@ -52,7 +52,6 @@ export const fetchCurrentUser = () => {
     })
       .then(response => response.json())
       .then((JSONResponse) => {
-        console.log("DID I GET HERE???");
         dispatch(setCurrentUser(JSONResponse.user))
       })
   }

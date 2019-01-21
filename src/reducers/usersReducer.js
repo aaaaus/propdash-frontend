@@ -10,7 +10,6 @@ const usersReducer = (state=defaultState, action) => {
   switch (action.type) {
     case 'SET_CURRENT_USER':
       //action.payload { username: 'Chandler Bing', bio: 'my user bio', avatar: 'some image url' }
-      console.log('%c INSIDE SET_CURRENT_USER', 'color: red', action);
       return { ...state, user: action.payload, loggedIn: true, authenticatingUser: false }
     case 'AUTHENTICATING_USER': //tells the app we're fetching
       return { ...state, authenticatingUser: true }

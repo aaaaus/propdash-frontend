@@ -2,40 +2,50 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class Unit extends React.Component {
+  //props inherited from UnitContainer: unit, selectUnit
 
-  detailRender(prop) {
+  classNameGenerator = () => {
+    const status = this.props.unit.status
+    return `unit-div ${status}`
+  }
 
-    let lease = this.props.leases.filter(lease => lease.unit_id === this.props.unit.id && lease.status === "current")
+  detailRender(dataSelection) {
 
-    if (lease.length === 0) {
-      lease = []
+    //unit is inherited from UnitContainer, but lease info must be pulled from global state
+    //here, we only show matching leases that are of "current" status (which there should only be one)
+    const currentLeases = this.props.leases.filter(lease => lease.unit_id === this.props.unit.id && lease.status === "current")
+    const lease = currentLeases[0]
+    const unit = this.props.unit
+
+    //display will change depending on global state change of state.data
+    switch(dataSelection) {
+      case "status":
+        return <span>{unit.status}</span>
+      case "rent":
+        return <span>{currentLeases.length > 0 ? `$ ${lease.rent}` : "no data"}</span>
+      case "ppsf":
+        return <span>{currentLeases.length > 0 ? `$ ${parseInt((lease.rent * 12) / unit.square_footage)} /sq ft` : "no data"}</span>
+      case "vacant":
+        return <span>days vacant</span>
+        // here we will have to determine the most recent "past" lease, and find the difference between the end date and the current date - will possibly cut
+      case "market":
+        return <span>$ {unit.market_rent}</span>
+      case "diff":
+        return <span>{currentLeases.length > 0 ? `${(((lease.rent - unit.market_rent)/unit.market_rent) * 100).toFixed(2)} %` : "no data"}</span>
+      case "lines":
+        return <span>{unit.line}</span>
+      default:
+        return <span>{unit.status}</span>
     }
 
-      switch(prop) {
-        case "status":
-          return <span>{this.props.unit.status}</span>
-        case "rent":
-          return <span>{lease.length > 0 ? `$ ${lease[0].rent}` : "no data"}</span>
-        case "vacant":
-          return <span>days vacant</span>
-        case "market":
-          return <span>$ {this.props.unit.market_rent}</span>
-        case "diff":
-          return <span></span>
-        case "lines":
-          return <span>{this.props.unit.line}</span>
-        default:
-          return <span>{this.props.unit.status}</span>
-      }
   }
 
   render() {
-    // console.log("UNIT PROPS ARE", this.props);
     return (
-      <div className="unit-div" onClick={() => this.props.selectUnit(this.props.unit)}>
+      <div className={this.classNameGenerator()} onClick={() => this.props.selectUnit(this.props.unit)}>
       <span>{this.props.unit.number}</span>
       <br />
-      {this.detailRender(this.props.dataSelection)}
+      <span>{this.detailRender(this.props.dataSelection)}</span>
       </div>
     )
   }

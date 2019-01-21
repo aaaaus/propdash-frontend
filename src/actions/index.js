@@ -113,3 +113,12 @@ export const handleInput = (event) => {
     payload: event.target.value
   }
 }
+
+//CREATE LEASE
+
+export const createLease = (resp) => {
+  return {
+    type: 'CREATE_LEASE',
+    payload: resp
+  }
+}
