@@ -71,7 +71,7 @@ export const selectLease = (lease) => {
   }
 };
 
-export function moveIn(unitId, unitStatus, leaseId, leaseStatus) {
+export function moveInOut(unitId, unitStatus, leaseId, leaseStatus) {
   return (dispatch) => {
     ApiAdapter.updateUnitStatus(unitId, unitStatus)
     .then(unit => {

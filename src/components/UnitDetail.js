@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchUnits, fetchLeases, createLease, updateUnit, moveIn } from '../actions';
+import { fetchUnits, fetchLeases, createLease, updateUnit, moveInOut } from '../actions';
 import LeaseInfo from './LeaseInfo.js'
 
 class UnitDetail extends React.Component {
@@ -71,9 +71,8 @@ class UnitDetail extends React.Component {
     const unit = this.props.selectUnit
     const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "future")[0]
 
-    // console.log(unit, lease);
-
-    this.props.moveIn(unit.id, "occupied", lease.id, "current")
+    //send to redux
+    this.props.moveInOut(unit.id, "occupied", lease.id, "current")
 
     this.setState({
       leaseType: 'current'
@@ -86,36 +85,26 @@ class UnitDetail extends React.Component {
     const unit = this.props.selectUnit
     const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current")[0]
 
-    console.log(unit, lease);
+    // console.log(unit, lease);
 
-    fetch(`http://localhost:4000/api/v1/leases/${lease.id}`, {
-    method: 'PATCH',
-    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-    body: JSON.stringify({status: "past"})
-    })
-    .then(resp => console.log(resp))
+    this.props.moveInOut(unit.id, "vacant", lease.id, "past")
 
-    fetch(`http://localhost:4000/api/v1/units/${unit.id}`, {
-    method: 'PATCH',
-    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-    body: JSON.stringify({status: "vacant"})
+    this.setState({
+      leaseType: 'past'
     })
-    .then(resp => console.log(resp))
-    .then()
   }
 
   handleToggleNotice = (e) => {
-    e.preventDefault()
 
     const unit = this.props.selectUnit
     const id = unit.id
     const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current")[0]
 
-    // debugger
-
     if (unit.status === "occupied") {
+      //send to redux
       this.props.updateUnit(id, "notice")
-    } else { //unit.status === "notice"
+    } else {
+      //send to redux
       this.props.updateUnit(id, "occupied")
     }
   }
@@ -189,42 +178,15 @@ class UnitDetail extends React.Component {
           <h3>UnitDetail</h3>
 
           <h2>Apartment {this.props.selectUnit.number}</h2>
-          <h3>{this.props.selectUnit.status}</h3>
+          <h4>{this.props.selectUnit.status}</h4>
 
-          <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-past">Past Leases</div>
-          <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-current">Current Lease</div>
-          <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-future">Future Lease</div>
-          <br />
-          <br />
+          <div id="lease-info-container">
+            <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-past">Past Leases</div>
+            <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-current">Current Lease</div>
+            <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-future">Future Lease</div>
 
-
-          {this.leaseInfoRender()}
-
-          {/*
-          <div id="current">
-            <span>Lessees: {this.multiRes(currentLease.residents)} </span><br />
-            <span>Lease Term: {new Date(currentLease.start_date * 1000).toLocaleDateString()} - {new Date(currentLease.end_date * 1000).toLocaleDateString()}</span><br />
-            <span>Rent: {currentLease.rent}</span><br />
-            <span>Status: {currentLease.status.toUpperCase()} </span><br />
-            <span>Balance: {currentLease.account_balance} </span><br />
-            <br />
-            <button onClick={this.handleMoveOut}>Move Out</button><br />
-            <span>Lease status will be: PAST</span>
+            {this.leaseInfoRender()}
           </div>
-          */}
-
-          {/*}
-          <div id="future">
-          <span>Lessees: {this.multiRes(futureLease.residents)} </span><br />
-          <span>Lease Term: {new Date(futureLease.start_date * 1000).toLocaleDateString()} - {new Date(futureLease.end_date * 1000).toLocaleDateString()}</span><br />
-          <span>Rent: {futureLease.rent}</span><br />
-          <span>Status: {futureLease.status.toUpperCase()} </span><br />
-          <span>Balance: {futureLease.account_balance} </span><br />
-          <br />
-          <button onClick={this.handleMoveOut}>Move Out</button><br />
-          <span>Lease status will be: PAST</span>
-          </div>
-          */}
 
           <h4>Unit Info</h4>
           <span>Amenities: </span><br />
@@ -254,48 +216,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchUnits, fetchLeases, createLease, updateUnit, moveIn })(UnitDetail);
-
-
-// function createNewSighting() {
-//   const createForm = document.getElementById('create-form')
-//   const nEntity = createForm.querySelector('input[name=entity]').value
-//   const nImage = createForm.querySelector('input[name=image-url]').value
-//   const nDescription = createForm.querySelector('textarea[name=description]').value
-//   const nLat = document.getElementById('create-coords').innerHTML.split('<br>')[0]
-//   const nLong = document.getElementById('create-coords').innerHTML.split('<br>')[1]
-//   const nMonsterId = createForm.querySelector('select').value
-//
-//   if (nEntity && nImage && nDescription && nLat && nLong && nMonsterId) {
-//     const nBody = {sighting: {entity: nEntity, image: nImage, description: nDescription, lat: nLat, long: nLong, monster_id: nMonsterId}}
-//     fetch('http://localhost:3000/api/v1/sightings', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json'
-//       },
-//       body: JSON.stringify(nBody)
-//     })
-//     .then(res => res.json())
-//     .then(res => {
-//       console.log(res)
-//       if (res.id) {
-//         const nSighting = new Sighting(res)
-//         loadAllSightings()
-//         .then(() => {
-//           deleteMarkers()
-//           renderSightings()
-//           resetCreate()
-//           renderInfoSidebar(res)
-//         })
-//
-//       }
-//     })
-//   } else {
-//     toggleInvisible(document.getElementById('open-create'))
-//     setTimeout(() => {
-//       dropInCreate(createForm)
-//       alert('You must fill out all forms!')
-//     },1050)
-//   }
-// }
+export default connect(mapStateToProps, { fetchUnits, fetchLeases, createLease, updateUnit, moveInOut })(UnitDetail);

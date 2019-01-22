@@ -14,7 +14,7 @@ body {
   border-color: blue; */
 
   background-color: #fff;
-  border-bottom-color: #dbdbdb;
+  border-bottom-color: #bcbcbc;
   border-bottom-width: 1px;
   border-bottom-style: solid;
 }
@@ -41,7 +41,7 @@ body {
   border-style: solid;
   border-color: pink; */
 
-  background-color: #f9fdff;
+  background-color: #eee;
 }
 
 #contentContainer {
@@ -55,7 +55,7 @@ body {
   border-style: solid;
   border-color: pink; */
 
-  background-color: #f9fdff;
+  background-color: #eee;
 }
 
 #filterContainer {
@@ -68,15 +68,6 @@ body {
   border-width: 1px;
   border-style: solid;
   border-color: firebrick;
-}
-
-.detail-lease-button {
-  display: inline-block;
-  width: 150px;
-  height: 50px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: steelblue;
 }
 
 #select-a-property {
@@ -206,3 +197,22 @@ background-image: linear-gradient(to bottom, #eb94d0, #2079b0);
 /* .unit-div.occupied    { background: #dfffdb; background: hsl(   113, 100%, 93%); }
 .unit-div.notice      { background: #ffaf54; background: hsl(  32, 100%, 66%); }
 .unit-div.vacant      { background: #7fe9ff; background: hsl(  190, 100%, 75%); } */
+
+/* SIDEBAR */
+
+#lease-info-container {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bcbcbc;
+}
+
+.detail-lease-button {
+  display: inline-block;
+  width: 33.3%;
+  height: 50px;
+  font-size: 20px;
+}
+
+.lease-info {
+  background-color: #fff;
+}

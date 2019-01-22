@@ -22,12 +22,12 @@ const LeaseInfo = (props) => {
     case "past":
       if (pastLeases.length > 0) {
         return (
-          <div id="past">
-          <span>Lessees: {multiRes(pastLeases[0].residents)} </span><br />
-          <span>Lease Term: {new Date(pastLeases[0].start_date * 1000).toLocaleDateString()} - {new Date(pastLeases[0].end_date * 1000).toLocaleDateString()}</span><br />
-          <span>Rent: {pastLeases[0].rent}</span><br />
-          <span>Status: {pastLeases[0].status.toUpperCase()} </span><br />
-          <span>Balance: {pastLeases[0].account_balance} </span><br />
+          <div id="past" className="lease-info">
+            <span>Lessees: {multiRes(pastLeases[0].residents)} </span><br />
+            <span>Lease Term: {new Date(pastLeases[0].start_date * 1000).toLocaleDateString()} - {new Date(pastLeases[0].end_date * 1000).toLocaleDateString()}</span><br />
+            <span>Rent: {pastLeases[0].rent}</span><br />
+            <span>Status: {pastLeases[0].status.toUpperCase()} </span><br />
+            <span>Balance: {pastLeases[0].account_balance} </span><br />
           </div>
         )
       } else {
@@ -37,17 +37,17 @@ const LeaseInfo = (props) => {
     case "current":
       if (currentLease) {
         return (
-          <div id="current">
-          <span>Lessees: {multiRes(currentLease.residents)} </span><br />
-          <span>Lease Term: {new Date(currentLease.start_date * 1000).toLocaleDateString()} - {new Date(currentLease.end_date * 1000).toLocaleDateString()}</span><br />
-          {/* <span>Occupants: </span><br /> */}
-          <span>Rent: {currentLease.rent}</span><br />
-          <span>Status: {currentLease.status.toUpperCase()} </span><br />
-          <span>Balance: {currentLease.account_balance} </span><br />
-          <br />
-          <button onClick={props.handleToggleNotice}>Toggle Notice</button><br />
-          <button onClick={props.handleMoveOut}>Move Out</button><br />
-          <span>Lease status will be: PAST</span>
+          <div id="current" className="lease-info">
+            <span>Lessees: {multiRes(currentLease.residents)} </span><br />
+            <span>Lease Term: {new Date(currentLease.start_date * 1000).toLocaleDateString()} - {new Date(currentLease.end_date * 1000).toLocaleDateString()}</span><br />
+            {/* <span>Occupants: </span><br /> */}
+            <span>Rent: {currentLease.rent}</span><br />
+            <span>Status: {currentLease.status.toUpperCase()} </span><br />
+            <span>Balance: {currentLease.account_balance} </span><br />
+            <br />
+            <button onClick={props.handleToggleNotice}>Toggle Notice</button><br />
+            <button onClick={props.handleMoveOut}>Move Out</button><br />
+            <span>Lease status will be: PAST</span>
           </div>
         )
       }
@@ -55,7 +55,7 @@ const LeaseInfo = (props) => {
         return "MOVE IN FUTURE LEASE WHEN READY"
       } else {
         return (
-          <div>
+          <div className="lease-info">
             <p><em>No active lease for this unit</em></p>
             <br /><br />
             <form onSubmit={props.handleCreateNewLease}>
@@ -74,15 +74,15 @@ const LeaseInfo = (props) => {
     case "future":
       if (futureLease) {
         return (
-          <div id="future">
-          <span>Lessees: {multiRes(futureLease.residents)} </span><br />
-          <span>Lease Term: {new Date(futureLease.start_date * 1000).toLocaleDateString()} - {new Date(futureLease.end_date * 1000).toLocaleDateString()}</span><br />
-          <span>Rent: {futureLease.rent}</span><br />
-          <span>Status: {futureLease.status.toUpperCase()} </span><br />
-          <span>Balance: {futureLease.account_balance} </span><br />
-          <br />
-          <button onClick={props.handleMoveIn}>Move In</button><br />
-          <span>Lease status will be: CURRENT</span>
+          <div id="future" className="lease-info">
+            <span>Lessees: {multiRes(futureLease.residents)} </span><br />
+            <span>Lease Term: {new Date(futureLease.start_date * 1000).toLocaleDateString()} - {new Date(futureLease.end_date * 1000).toLocaleDateString()}</span><br />
+            <span>Rent: {futureLease.rent}</span><br />
+            <span>Status: {futureLease.status.toUpperCase()} </span><br />
+            <span>Balance: {futureLease.account_balance} </span><br />
+            <br />
+            <button onClick={props.handleMoveIn}>Move In</button><br />
+            <span>Lease status will be: CURRENT</span>
           </div>
         )
       } else {

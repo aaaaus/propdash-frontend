@@ -14,7 +14,9 @@ class Unit extends React.Component {
     //unit is inherited from UnitContainer, but lease info must be pulled from global state
     //here, we only show matching leases that are of "current" status (which there should only be one)
     const currentLeases = this.props.leases.filter(lease => lease.unit_id === this.props.unit.id && lease.status === "current")
+    const pastLeases = this.props.leases.filter(lease => lease.unit_id === this.props.unit.id && lease.status === "past")
     const lease = currentLeases[0]
+    const past = pastLeases[0]
     const unit = this.props.unit
 
     //display will change depending on global state change of state.data
@@ -31,7 +33,7 @@ class Unit extends React.Component {
       case "ppsf":
         return <span>{currentLeases.length > 0 ? `$ ${parseInt((lease.rent * 12) / unit.square_footage)} /sq ft` : "no data"}</span>
       case "vacant":
-        return <span>days vacant</span>
+        return <span>{ pastLeases.length > 0 && currentLeases.length === 0 ? `${parseInt(((Date.now() / 1000) - past.end_date) / 60 / 60 / 24)} days vacant` : ''}</span>
         // here we will have to determine the most recent "past" lease, and find the difference between the end date and the current date - will possibly cut
       case "market":
         return <span>$ {unit.market_rent}</span>
