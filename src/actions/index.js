@@ -19,6 +19,8 @@ export const selectProperty = (property) => {
   }
 }
 
+//UNITS
+
 export function fetchUnits() {
   return (dispatch) => {
     dispatch({ type: "FETCHING_UNITS" })
@@ -31,12 +33,24 @@ export function fetchUnits() {
   }
 }
 
+export function updateUnit(id, status) {
+  return (dispatch) => {
+    ApiAdapter.updateUnitStatus(id, status)
+    .then(unit => {
+      dispatch(replaceUnit(unit))
+      dispatch(selectUnit(unit))
+    })
+  }
+}
+
 export const selectUnit = (unit) => {
   return {
     type: 'SELECT_UNIT',
     payload: unit
   }
 };
+
+//LEASES
 
 export function fetchLeases() {
   return (dispatch) => {
@@ -56,6 +70,21 @@ export const selectLease = (lease) => {
     payload: lease
   }
 };
+
+export function moveIn(unitId, unitStatus, leaseId, leaseStatus) {
+  return (dispatch) => {
+    ApiAdapter.updateUnitStatus(unitId, unitStatus)
+    .then(unit => {
+      dispatch(replaceUnit(unit))
+    })
+    ApiAdapter.updateLeaseStatus(leaseId, leaseStatus)
+    .then(lease => {
+      dispatch(replaceLease(lease))
+    })
+  }
+}
+
+//RESIDENTS
 
 export function fetchResidents() {
   return (dispatch) => {
@@ -119,6 +148,22 @@ export const handleInput = (event) => {
 export const createLease = (resp) => {
   return {
     type: 'CREATE_LEASE',
+    payload: resp
+  }
+}
+
+//REPLACE (payload object to replace in local array)
+
+export const replaceUnit = (resp) => {
+  return {
+    type: 'REPLACE_UNIT',
+    payload: resp
+  }
+}
+
+export const replaceLease = (resp) => {
+  return {
+    type: 'REPLACE_LEASE',
     payload: resp
   }
 }

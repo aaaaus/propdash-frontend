@@ -14,6 +14,11 @@ const leaseReducer = (state = initialState, action) => {
       return { ...state, selectLease: action.payload};
     case "CREATE_LEASE":
       return { ...state, leases: [...state.leases, action.payload] };
+    case "REPLACE_LEASE":
+      const id = action.payload.id
+      const new_leases = state.leases.filter(lease => lease.id != id)
+      
+      return { ...state, leases: [...new_leases, action.payload]}
     default:
       return state;
   }

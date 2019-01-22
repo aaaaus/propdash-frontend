@@ -20,7 +20,12 @@ class Unit extends React.Component {
     //display will change depending on global state change of state.data
     switch(dataSelection) {
       case "status":
-        return <span>{unit.status}</span>
+        return (
+          <div>
+            <span>{unit.status}</span><br /><br />
+            <span>{currentLeases.length > 0 ? `${new Date(lease.end_date * 1000).toLocaleDateString()}` : "no data"}</span>
+          </div>
+        )
       case "rent":
         return <span>{currentLeases.length > 0 ? `$ ${lease.rent}` : "no data"}</span>
       case "ppsf":

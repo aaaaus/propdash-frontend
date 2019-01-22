@@ -49,4 +49,22 @@ export default class ApiAdapter {
     .then(res => res.json())
   }
 
+  static updateUnitStatus(unitId, status) {
+    return fetch(`${UNIT_URL}${unitId}`, {
+      method: 'PATCH',
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      body: JSON.stringify({status: status})
+    })
+    .then(resp => resp.json())
+  }
+
+  static updateLeaseStatus(leaseId, status) {
+    return fetch(`${LEASE_URL}${leaseId}`, {
+      method: 'PATCH',
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      body: JSON.stringify({status: status})
+    })
+    .then(resp => resp.json())
+  }
+
 }

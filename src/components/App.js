@@ -11,7 +11,7 @@ import NotFound from './NotFound';
 
 const App = (props) => {
 
-  console.log('%c APP Props: ', 'color: cyan', props)
+  // console.log('%c APP Props: ', 'color: cyan', props)
 
   return (
     <Fragment>

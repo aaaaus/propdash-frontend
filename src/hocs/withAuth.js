@@ -8,14 +8,14 @@ import { fetchCurrentUser } from '../actions/user'
 const withAuth = (WrappedComponent) => {
   class AuthorizedComponent extends React.Component {
     componentDidMount() {
-      console.log('%c INSIDE COMPONENT DID MOUNT FOR AUTH HOC', 'color: purple')
+      // console.log('%c INSIDE COMPONENT DID MOUNT FOR AUTH HOC', 'color: purple')
       // POTENTIAL SECURITY FLAW!!! my tokens don't expire
       if (localStorage.getItem('jwt') && !this.props.loggedIn) this.props.fetchCurrentUser()
       // if i have a token but don't know who it belongs to, ask the server for that user's data
     }
 
     render() {
-      console.log('%c INSIDE RENDER FOR HOC', 'color: green')
+      // console.log('%c INSIDE RENDER FOR HOC', 'color: green')
       if (localStorage.getItem('jwt') && this.props.loggedIn) {
         //i have a token and i'm logged in
         // wrapped component is Dash

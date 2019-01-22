@@ -19,6 +19,11 @@ const unitsReducer = (state = initialState, action) => {
       return { ...state, isLoaded: true }
     case "SELECT_UNIT":
       return { ...state, selectUnit: action.payload}
+    case "REPLACE_UNIT":
+      const id = action.payload.id
+      const new_units = state.units.filter(unit => unit.id != id)
+
+      return { ...state, units: [...new_units, action.payload]}
     default:
       return state;
   }

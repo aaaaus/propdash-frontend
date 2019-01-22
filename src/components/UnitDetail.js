@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchLeases, createLease } from '../actions';
+import { fetchUnits, fetchLeases, createLease, updateUnit, moveIn } from '../actions';
 import LeaseInfo from './LeaseInfo.js'
 
 class UnitDetail extends React.Component {
@@ -60,9 +60,24 @@ class UnitDetail extends React.Component {
         .then(resp => resp.json())
         .then(res => {
           this.props.createLease(res); //sends to createLease action creators
-          this.props.fetchLeases();
+          // this.props.fetchLeases();
         })
     }
+  }
+
+  handleMoveIn = (e) => {
+    e.preventDefault()
+
+    const unit = this.props.selectUnit
+    const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "future")[0]
+
+    // console.log(unit, lease);
+
+    this.props.moveIn(unit.id, "occupied", lease.id, "current")
+
+    this.setState({
+      leaseType: 'current'
+    })
   }
 
   handleMoveOut = (e) => {
@@ -89,25 +104,20 @@ class UnitDetail extends React.Component {
     .then()
   }
 
-  handleMoveIn = (e) => {
-    console.log(e.target);
-  }
-
   handleToggleNotice = (e) => {
     e.preventDefault()
 
     const unit = this.props.selectUnit
+    const id = unit.id
     const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current")[0]
 
-    console.log(unit, lease);
+    // debugger
 
-    fetch(`http://localhost:4000/api/v1/units/${unit.id}`, {
-    method: 'PATCH',
-    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-    body: JSON.stringify({status: "notice"})
-    })
-    .then(resp => console.log(resp))
-    .then()
+    if (unit.status === "occupied") {
+      this.props.updateUnit(id, "notice")
+    } else { //unit.status === "notice"
+      this.props.updateUnit(id, "occupied")
+    }
   }
 
   leaseInfoRender() {
@@ -177,11 +187,16 @@ class UnitDetail extends React.Component {
       return (
         <div>
           <h3>UnitDetail</h3>
+
+          <h2>Apartment {this.props.selectUnit.number}</h2>
+          <h3>{this.props.selectUnit.status}</h3>
+
           <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-past">Past Leases</div>
           <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-current">Current Lease</div>
           <div onClick={this.handleLeaseTypeChange} className="detail-lease-button" id="leaseType-future">Future Lease</div>
           <br />
           <br />
+
 
           {this.leaseInfoRender()}
 
@@ -223,6 +238,7 @@ class UnitDetail extends React.Component {
   } //renderContent
 
   render() {
+    console.log('%c UnitDetail Render', 'color: red')
     return (
       this.renderContent()
     )
@@ -238,7 +254,7 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchLeases, createLease })(UnitDetail);
+export default connect(mapStateToProps, { fetchUnits, fetchLeases, createLease, updateUnit, moveIn })(UnitDetail);
 
 
 // function createNewSighting() {

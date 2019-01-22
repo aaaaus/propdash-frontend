@@ -179,6 +179,7 @@ class UnitContainer extends React.Component {
   }
 
   render() {
+    console.log('%c UnitContainer Render', 'color: dodgerblue')
     return(
       <div>
         <h3>UnitContainer</h3>

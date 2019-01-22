@@ -45,7 +45,7 @@ const LeaseInfo = (props) => {
           <span>Status: {currentLease.status.toUpperCase()} </span><br />
           <span>Balance: {currentLease.account_balance} </span><br />
           <br />
-          <button onClick={props.handleToggleNotice}>Put on Notice</button><br />
+          <button onClick={props.handleToggleNotice}>Toggle Notice</button><br />
           <button onClick={props.handleMoveOut}>Move Out</button><br />
           <span>Lease status will be: PAST</span>
           </div>
