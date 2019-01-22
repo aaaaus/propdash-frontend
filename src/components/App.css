@@ -201,6 +201,8 @@ background-image: linear-gradient(to bottom, #eb94d0, #2079b0);
 /* SIDEBAR */
 
 #lease-info-container {
+  /* display: flex; */
+  /* min-height: 35vh; */
   border-width: 1px;
   border-style: solid;
   border-color: #bcbcbc;
@@ -208,11 +210,29 @@ background-image: linear-gradient(to bottom, #eb94d0, #2079b0);
 
 .detail-lease-button {
   display: inline-block;
+  text-align: center;
   width: 33.3%;
   height: 50px;
   font-size: 20px;
 }
 
-.lease-info {
+.detail-lease-button-active {
+  display: inline-block;
+  text-align: center;
+  width: 33.3%;
+  height: 50px;
+  font-size: 20px;
   background-color: #fff;
+}
+
+.lease-info {
+  text-align: center;
+  min-height: 400px;
+  background-color: #fff;
+}
+
+.no-lease-span {
+  display: inline-block;
+  vertical-align: middle;
+  color: red;
 }

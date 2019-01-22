@@ -31,7 +31,11 @@ const LeaseInfo = (props) => {
           </div>
         )
       } else {
-        return "NO PAST LEASES"
+        return (
+          <div id="past" className="lease-info">
+            <p className="no-lease-span">"NO PAST LEASES"</p>
+          </div>
+        )
       }
 
     case "current":
@@ -86,7 +90,11 @@ const LeaseInfo = (props) => {
           </div>
         )
       } else {
-        return "NO FUTURE LEASE"
+        return (
+          <div id="past" className="lease-info">
+            <span className="no-lease-span">"NO FUTURE LEASE"</span>
+          </div>
+        )
       }
   }
 }
