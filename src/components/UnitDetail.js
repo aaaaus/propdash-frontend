@@ -65,7 +65,6 @@ class UnitDetail extends React.Component {
     }
   }
 
-  //move out button
   handleMoveOut = (e) => {
     e.preventDefault()
 
@@ -94,9 +93,22 @@ class UnitDetail extends React.Component {
     console.log(e.target);
   }
 
-  // handleToggleNotice = (e) => {
-  //   console.log(e.target.value)
-  // }
+  handleToggleNotice = (e) => {
+    e.preventDefault()
+
+    const unit = this.props.selectUnit
+    const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "current")[0]
+
+    console.log(unit, lease);
+
+    fetch(`http://localhost:4000/api/v1/units/${unit.id}`, {
+    method: 'PATCH',
+    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+    body: JSON.stringify({status: "notice"})
+    })
+    .then(resp => console.log(resp))
+    .then()
+  }
 
   leaseInfoRender() {
     return (
@@ -106,6 +118,7 @@ class UnitDetail extends React.Component {
         leases={this.props.leases}
         handleMoveOut={this.handleMoveOut}
         handleMoveIn={this.handleMoveIn}
+        handleToggleNotice={this.handleToggleNotice}
         handleCreateNewLease={this.handleCreateNewLease}
         handleDateChange={this.handleDateChange}
         handleChange={this.handleChange}

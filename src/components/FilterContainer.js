@@ -8,27 +8,28 @@ const FilterContainer = (props) => {
   // console.log("FilterContainer props are:", props);
 
   return (
-    <div>
+    <div id="filterContainer">
       <h3>FilterContainer</h3>
 
-      <button id="status" onClick={props.dataSelect}>Status</button>
-      <button id="rent" onClick={props.dataSelect}>Rent</button>
-      <button id="ppsf" onClick={props.dataSelect}>$PSF</button>
-      <button id="vacant" onClick={props.dataSelect}>Days Vacant</button>
-      <button id="market" onClick={props.dataSelect}>Market Rent</button>
-      <button id="diff" onClick={props.dataSelect}>Market Rent %Diff</button>
-      <button id="lines" onClick={props.dataSelect}>Lines</button>
+      <button className="button-test" id="status" onClick={props.dataSelect}>Status</button>
+      <button className="ui button" id="rent" onClick={props.dataSelect}>Rent</button>
+      <button className="ui button" id="ppsf" onClick={props.dataSelect}>$PSF</button>
+      <button className="ui button" id="vacant" onClick={props.dataSelect}>Days Vacant</button>
+      <button className="ui button" id="market" onClick={props.dataSelect}>Market Rent</button>
+      <button className="ui button" id="diff" onClick={props.dataSelect}>Market Rent %Diff</button>
+      <button className="ui button" id="lines" onClick={props.dataSelect}>Lines</button>
       <br />
       <br />
-      <button id="filter-occupied" onClick={props.filterOccupied}>{props.filterOccStatus ? 'Occupied (ON)' : 'Occupied'}</button><br />
-      <button id="filter-notice" onClick={props.filterNotice}>{props.filterNotStatus ? 'Notice (ON)' : 'Notice'}</button><br />
-      <button id="filter-vacant" onClick={props.filterVacant}>{props.filterVacStatus ? 'Vacant (ON)' : 'Vacant'}</button><br />
+      <button className="filter-button" id={props.filterOccStatus? "filter-occupied-on" : "filter-occupied-off"} onClick={props.filterOccupied}>Occupied</button>
+      <button className="filter-button" id={props.filterNotStatus? "filter-notice-on" : "filter-notice-off"} onClick={props.filterNotice}>Notice</button>
+      <button className="filter-button" id={props.filterVacStatus? "filter-vacant-on" : "filter-vacant-off"} onClick={props.filterVacant}>Vacant</button>
+      <br />
       <br />
       <input
         onChange={props.handleInput}
         value={props.filterText}
         type="text"
-        placeholder="search by name"
+        placeholder="Tenant name"
         style={{width: "250px"}}
       >
       </input>

@@ -9,11 +9,14 @@ body {
   height: 5vh;
   width: 100vw;
 
-  border-width: 1px;
+  /* border-width: 1px;
   border-style: solid;
-  border-color: blue;
+  border-color: blue; */
 
-  background-color: #b1c9ef;
+  background-color: #fff;
+  border-bottom-color: #dbdbdb;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
 }
 
 #nav-offset {
@@ -34,9 +37,11 @@ body {
   width: 33vw;
   /* width: 200px; */
 
-  border-width: 1px;
+  /* border-width: 1px;
   border-style: solid;
-  border-color: pink;
+  border-color: pink; */
+
+  background-color: #f9fdff;
 }
 
 #contentContainer {
@@ -46,9 +51,15 @@ body {
   /* flex-grow: 1; */
   margin-left: 33vw;
 
-  border-width: 1px;
+  /* border-width: 1px;
   border-style: solid;
-  border-color: pink;
+  border-color: pink; */
+
+  background-color: #f9fdff;
+}
+
+#filterContainer {
+  text-align: center;
 }
 
 .prop-div {
@@ -67,3 +78,131 @@ body {
   border-style: solid;
   border-color: steelblue;
 }
+
+#select-a-property {
+  color: gray;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 24px;
+  align-content: center;
+}
+
+.button-test {
+background: #eb94d0;
+background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);
+background-image: -moz-linear-gradient(top, #eb94d0, #2079b0);
+background-image: -ms-linear-gradient(top, #eb94d0, #2079b0);
+background-image: -o-linear-gradient(top, #eb94d0, #2079b0);
+background-image: linear-gradient(to bottom, #eb94d0, #2079b0);
+-webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+/* text-shadow: 3px 2px 1px #9daef5;
+  -webkit-box-shadow: 6px 5px 24px #666666;
+  -moz-box-shadow: 6px 5px 24px #666666;
+  box-shadow: 6px 5px 24px #666666; */
+/* font-family: Arial; */
+  color: #fafafa;
+  font-size: 14px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+/* FILTER CONTAINER */
+
+.filter-button {
+  box-sizing: border-box;
+/* background: #eb94d0; */
+-webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+/* text-shadow: 3px 2px 1px #9daef5;
+  -webkit-box-shadow: 6px 5px 24px #666666;
+  -moz-box-shadow: 6px 5px 24px #666666;
+  box-shadow: 6px 5px 24px #666666; */
+/* font-family: Arial; */
+  /* color: #fafafa; */
+  font-size: 14px;
+  padding: 10px 20px 10px 20px;
+  margin: 2px;
+  text-decoration: none;
+}
+
+#filter-occupied-on {
+  border-color: #FFD662;
+  border-width: 3px;
+  background: #FFD662;
+  color: #4f4f4f;
+}
+
+#filter-occupied-off {
+  border-color: #FFD662;
+  border-width: 3px;
+  background: #fff;
+  color: #4f4f4f;
+}
+
+#filter-notice-on {
+  border-color: #FE840E;
+  border-width: 3px;
+  background: #FE840E;
+  color: #fafafa;
+}
+#filter-notice-off {
+  border-color: #FE840E;
+  border-width: 3px;
+  background: #fff;
+  color: #4f4f4f;
+}
+
+#filter-vacant-on {
+  border-color: #00539C;
+  border-width: 3px;
+  background: #00539C;
+  color: #fafafa;
+}
+
+#filter-vacant-off {
+  border-color: #00539C;
+  border-width: 3px;
+  background: #fff;
+  color: #4f4f4f;
+}
+
+
+/* UNIT CONTAINER */
+
+.unit-div {
+  position: relative;
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  padding: 10px;
+  background: #888;
+  color: #262524;
+  /* z-index: -1;  this caused the onClicks to be disabled...? */
+}
+
+.unit-div:hover {
+  opacity: 0.5
+}
+
+/* .unit-div > span {
+  color: #fafafa;
+} */
+
+.unit-div > span:first-child {
+  font-size: 20px;
+}
+
+.unit-div.occupied        { background: #FFD662 }
+.unit-div.occupied > span { color: #010101 }
+.unit-div.notice          { background: #FE840E }
+.unit-div.notice > span { color: #fafafa }
+.unit-div.vacant          { background: #00539C }
+.unit-div.vacant > span { color: #fafafa }
+
+/* .unit-div.occupied    { background: #dfffdb; background: hsl(   113, 100%, 93%); }
+.unit-div.notice      { background: #ffaf54; background: hsl(  32, 100%, 66%); }
+.unit-div.vacant      { background: #7fe9ff; background: hsl(  190, 100%, 75%); } */

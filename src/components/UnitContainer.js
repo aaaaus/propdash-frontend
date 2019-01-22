@@ -36,7 +36,7 @@ class UnitContainer extends React.Component {
         </FlipMove>
       )
     } else {
-      return <span>"Select a property..."</span>
+      return <span id="select-a-property">Select a property...</span>
     }
 
   }
@@ -74,8 +74,16 @@ class UnitContainer extends React.Component {
 
         //creates an array of current lease IDs for which there are matching residents
         const leaseIds = residents.map(resident => {
+          // debugger
           const lease = resident.leases.find(lease => lease.status === "current")
-          return lease.id
+
+          //error handling part 1 for when a resident is moved out and only has past leases
+          if (lease) {
+            return lease.id
+          } else {
+            return 'skip'
+          }
+
         })
         //=> [9, 10]
 
@@ -83,8 +91,13 @@ class UnitContainer extends React.Component {
 
         //creates an array of leases based on the leaseIDs found in previous
         leaseIds.forEach(id => {
-          const lease = this.props.leases.find(lease => lease.id === id )
-          leases.push(lease)
+          //error handling part 2 for when a resident is moved out and only has past leases
+          if (id === 'skip') {
+            console.log("skipping")
+          } else {
+            const lease = this.props.leases.find(lease => lease.id === id )
+            leases.push(lease)
+          }
         })
 
         //calling leases
