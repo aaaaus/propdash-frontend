@@ -5,35 +5,47 @@ body {
 
 #nav-div {
   box-sizing: border-box;
+  position: fixed;
+  height: 5vh;
+  width: 100vw;
+
   border-width: 1px;
   border-style: solid;
   border-color: blue;
+
   background-color: #b1c9ef;
-  height: 5vh;
-  position: fixed;
-  width: 100%
 }
 
 #nav-offset {
   height: 5vh;
 }
 
+/* DASH */
+
 #dashContainer {
-  /* margin: 0 0 0 0; */
-  /* margin-top: 100px; */
+  width: 100vw;
 }
 
 #sidebar {
   box-sizing: border-box;
+  float: left;
+  position: fixed;
+  height: 95vh;
+  width: 33vw;
+  /* width: 200px; */
+
   border-width: 1px;
   border-style: solid;
   border-color: pink;
-  /* height: 95vh; */
-  /* width: 30vw; */
 }
 
 #contentContainer {
   box-sizing: border-box;
+  /* width: 67vw;
+  float: right; */
+  /* flex-grow: 1; */
+  margin-left: 33vw;
+
   border-width: 1px;
   border-style: solid;
   border-color: pink;

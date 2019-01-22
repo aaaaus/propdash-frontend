@@ -43,9 +43,9 @@ class Unit extends React.Component {
   render() {
     return (
       <div className={this.classNameGenerator()} onClick={() => this.props.selectUnit(this.props.unit)}>
-      <span>{this.props.unit.number}</span>
-      <br />
-      <span>{this.detailRender(this.props.dataSelection)}</span>
+        <span>{this.props.unit.number}</span>
+        <br />
+        <span>{this.detailRender(this.props.dataSelection)}</span>
       </div>
     )
   }
