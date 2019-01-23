@@ -181,17 +181,16 @@ class UnitContainer extends React.Component {
   render() {
     console.log('%c UnitContainer Render', 'color: dodgerblue')
     return(
-      <div>
-        <h3>UnitContainer</h3>
-        <button id="sort-number" onClick={this.handleSortBy}>Sort By Unit</button>
-        <button id="sort-end_date" onClick={this.handleSortBy}>Sort By Lease End Date</button>
-        <br />
-        <br />
-        <div className="grid">
-
-          {this.renderUnits()}
-
+      <div id="unit-container">
+        <div id="sort-button-container">
+          <h4 className="helper">UnitContainer</h4>
+          <button id="sort-number" className="button-test" onClick={this.handleSortBy}>Sort By Unit</button>
+          <button id="sort-end_date" className="button-test" onClick={this.handleSortBy}>Sort By Lease End Date</button>
         </div>
+        <div className="grid clearfix">
+          {this.renderUnits()}
+        </div>
+
       </div>
     )
   }

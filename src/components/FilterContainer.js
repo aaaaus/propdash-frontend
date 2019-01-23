@@ -9,7 +9,7 @@ const FilterContainer = (props) => {
 
   return (
     <div id="filterContainer">
-      <h3>FilterContainer</h3>
+      <h4 className="helper">FilterContainer</h4>
 
       <button className="button-test" id="status" onClick={props.dataSelect}>Status</button>
       <button className="ui button" id="rent" onClick={props.dataSelect}>Rent</button>
@@ -23,8 +23,6 @@ const FilterContainer = (props) => {
       <button className="filter-button" id={props.filterOccStatus? "filter-occupied-on" : "filter-occupied-off"} onClick={props.filterOccupied}>Occupied</button>
       <button className="filter-button" id={props.filterNotStatus? "filter-notice-on" : "filter-notice-off"} onClick={props.filterNotice}>Notice</button>
       <button className="filter-button" id={props.filterVacStatus? "filter-vacant-on" : "filter-vacant-off"} onClick={props.filterVacant}>Vacant</button>
-      <br />
-      <br />
       <input
         onChange={props.handleInput}
         value={props.filterText}

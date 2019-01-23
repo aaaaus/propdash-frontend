@@ -12,10 +12,17 @@ export function fetchProperties() {
   }
 }
 
-export const selectProperty = (property) => {
-  return {
-    type: 'SELECT_PROPERTY',
-    payload: property
+// export const selectProperty = (property) => {
+//   return {
+//     type: 'SELECT_PROPERTY',
+//     payload: property
+//   }
+// }
+
+export function selectProperty(property) {
+  return (dispatch) => {
+    dispatch({ type: "SELECT_PROPERTY", payload: property })
+    dispatch({ type: "SELECT_UNIT", payload: null })
   }
 }
 

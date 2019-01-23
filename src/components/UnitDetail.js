@@ -132,8 +132,7 @@ class UnitDetail extends React.Component {
 
     if (!this.props.selectUnit) {
       return (
-        <div>
-          <h3>UnitDetail</h3>
+        <div id="no-unit-selected">
           <p>Please select a unit</p>
         </div>
       )
@@ -153,7 +152,8 @@ class UnitDetail extends React.Component {
         // console.log("UNIT DETAIL STATE IS: ", this.state);
         return (
           <div>
-            <h3>UnitDetail</h3>
+            <span className="helper">UnitDetail</span>
+
             <p><em>No active lease for this unit</em></p>
             <button>Create New Future Lease</button>
             <br /><br />
@@ -175,10 +175,11 @@ class UnitDetail extends React.Component {
 
       return (
         <div>
-          <h3>UnitDetail</h3>
 
-          <h2>Apartment {this.props.selectUnit.number}</h2>
-          <h4>{this.props.selectUnit.status}</h4>
+          <div id="lease-title-container">
+            <h2>Apartment {this.props.selectUnit.number}</h2>
+            <h4>{this.props.selectUnit.status}</h4>
+          </div>
 
           <div id="lease-info-container">
             <div
@@ -208,10 +209,11 @@ class UnitDetail extends React.Component {
             {this.leaseInfoRender()}
           </div>
 
-          <h4>Unit Info</h4>
-          <span>Amenities: </span><br />
-          <span><a href='/api/v1/print/example.pdf' target='_blank'>Floorplan (PDF)</a></span><br />
-          <br />
+          <div id="unit-info-container">
+            <h4>Unit Info</h4>
+            <span>Amenities: </span><br />
+            <span><a href='/api/v1/print/example.pdf' target='_blank'>Floorplan (PDF)</a></span>
+          </div>
         </div>
       ) //return
 

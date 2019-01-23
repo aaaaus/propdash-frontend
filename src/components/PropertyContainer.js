@@ -17,9 +17,9 @@ class PropertyContainer extends React.Component {
       })
 
       return (
-        <div>
-        <h3>PropertyContainer</h3>
-        <h3>{properties}</h3>
+        <div id="property-container">
+          <span>Properties</span><br />
+          {properties}
         </div>
       )
   }

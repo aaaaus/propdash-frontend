@@ -25,7 +25,7 @@ class Unit extends React.Component {
         return (
           <div>
             <span>{unit.status}</span><br /><br />
-            <span>{currentLeases.length > 0 ? `${new Date(lease.end_date * 1000).toLocaleDateString()}` : "no data"}</span>
+            <span>{currentLeases.length > 0 ? `${new Date(lease.end_date * 1000).toLocaleDateString()}` : `${new Date(past.end_date * 1000).toLocaleDateString()}`}</span>
           </div>
         )
       case "rent":
@@ -42,7 +42,12 @@ class Unit extends React.Component {
       case "lines":
         return <span>{unit.line}</span>
       default:
-        return <span>{unit.status}</span>
+        return (
+          <div>
+            <span>{unit.status}</span><br /><br />
+            <span>{currentLeases.length > 0 ? `${new Date(lease.end_date * 1000).toLocaleDateString()}` : `${new Date(past.end_date * 1000).toLocaleDateString()}`}</span>
+          </div>
+        )
     }
 
   }
