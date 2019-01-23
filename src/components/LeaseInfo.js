@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Select from 'react-select';
 
 function multiRes(array) {
   return array.map(resident => nameMerge(resident)) //.join(', ')
@@ -19,6 +21,8 @@ function nameMerge(resident) {
 const LeaseInfo = (props) => {
 
   console.log("LEASE INFO PROPS ARE", props);
+
+  const selectOptions = props.allResidents.map(resident => ({ label: `${resident.first_name} ${resident.last_name}`, value: resident.id }));
 
   const pastLeases = props.leases.filter(lease => lease.unit_id === props.unit.id && lease.status === "past")
   const currentLease = props.leases.filter(lease => lease.unit_id === props.unit.id && lease.status === "current")[0]
@@ -130,7 +134,7 @@ const LeaseInfo = (props) => {
       } else {
         return (
           <div className="lease-info">
-            <p><em>No active lease for this unit</em></p>
+            <p><em>No active lease for this unit - REAL THING</em></p>
             <br /><br />
             {/*
             <form onSubmit={props.handleCreateNewLease}>
@@ -145,8 +149,18 @@ const LeaseInfo = (props) => {
             </form>
             */}
             <form onSubmit={props.handleCreateNewLease}>
+              <Select
+                name="tenant1"
+                onChange={props.handleTenant1Change}
+                value={props.newTenant1} //should be resident ID
+                options={selectOptions} />
+              <Select
+                name="tenant2"
+                onChange={props.handleTenant2Change}
+                value={props.newTenant2} //should be resident ID
+                options={selectOptions} />
               <span>start date</span><br />
-              <input className="create-form-input" type="date" placeholder="Start Date" name="newStartDate" id="start-date" onChange={props.handleDateChange} /><br />
+              <input className="create-form-input" type="date" name="newStartDate" id="start-date" onChange={props.handleDateChange} /><br />
               <span>end date</span><br />
               <input className="create-form-input" type="date" name="newEndDate" id="end-date" onChange={props.handleDateChange} /><br />
               <input className="create-form-input" name="rent" placeholder="Rent" onChange={props.handleChange} value={props.rent}></input><br />
@@ -210,4 +224,11 @@ const LeaseInfo = (props) => {
   }
 }
 
-export default LeaseInfo;
+function mapStateToProps(state) {
+  return {
+    allResidents: state.resident.residents,
+    resIsLoaded: state.resident.isLoaded,
+  }
+}
+
+export default connect(mapStateToProps, null )(LeaseInfo);

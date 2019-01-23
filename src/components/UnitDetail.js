@@ -7,7 +7,8 @@ import LeaseInfo from './LeaseInfo.js'
 class UnitDetail extends React.Component {
 
   state = {
-    lessees: [],
+    tenant1id: '',
+    tenant2id: '',
     newStartDate: '',
     newEndDate: '',
     rent: '',
@@ -36,10 +37,21 @@ class UnitDetail extends React.Component {
     return this.setState({ [e.target.name]: e.target.value })
   }
 
+  handleTenant1Change = (e) => {
+    return this.setState({ tenant1id: e.value })
+  }
+
+  handleTenant2Change = (e) => {
+    console.log(this.state)
+    return this.setState({ tenant2id: e.value })
+  }
+
   //refactor later to do it the 'React' way
   handleCreateNewLease = (e) => {
     e.preventDefault()
 
+    const tenant1 = this.state.tenant1id
+    const tenant2 = this.state.tenant2id
     const nUnit = this.props.selectUnit.id
     const nStart = this.state.newStartDate
     const nEnd = this.state.newEndDate
@@ -47,9 +59,12 @@ class UnitDetail extends React.Component {
     const nBalance = 0
     const nStatus = "future"
 
+    debugger
+
     if (nStart && nEnd && nRent) {
 
       const nBody = {lease: {unit_id: nUnit, start_date: nStart, end_date: nEnd, rent: nRent, account_balance: nBalance, status: nStatus }}
+      const joinBody = {resLease: {resident_id: tenant1 }} //res.id below gives new lease ID
 
       this.setState({
         leaseType: 'future'
@@ -65,7 +80,7 @@ class UnitDetail extends React.Component {
       })
       .then(resp => resp.json())
       .then(res => {
-        this.props.createLease(res); //sends to createLease action creators
+        this.props.createLease(res); //sends to createLease action creators //send nBody and two IDs
       })
     }
   }
@@ -125,8 +140,12 @@ class UnitDetail extends React.Component {
         handleToggleNotice={this.handleToggleNotice}
         handleCreateNewLease={this.handleCreateNewLease}
         handleDateChange={this.handleDateChange}
+        handleTenant1Change={this.handleTenant1Change}
+        handleTenant2Change={this.handleTenant2Change}
         handleChange={this.handleChange}
         rent={this.state.rent}
+        newTenant1={this.state.newTenant1}
+        newTenant2={this.state.newTenant2}
       />
     )
   }
@@ -155,6 +174,7 @@ class UnitDetail extends React.Component {
       // if (!currentLease) {
       if (currentLease === 100) {
         // console.log("UNIT DETAIL STATE IS: ", this.state);
+        ////////////////DEAD CODE
         return (
           <div>
             <span className="helper">UnitDetail</span>

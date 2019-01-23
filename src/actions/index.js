@@ -152,7 +152,7 @@ export const handleInput = (event) => {
 
 //CREATE LEASE
 
-export const createLease = (resp) => {
+export const createLease = (resp) => { //turn this into function, pass resident_id argument, dispatch also to resident reducer to hit custom route for reslease generation
   return {
     type: 'CREATE_LEASE',
     payload: resp
