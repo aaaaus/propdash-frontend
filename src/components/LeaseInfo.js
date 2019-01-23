@@ -4,9 +4,11 @@ function multiRes(array) {
   return array.map(resident => nameMerge(resident)) //.join(', ')
 }
 
-// function displayRes(array) {
-//   return array.forEach(resident => <span>resident</span><br />)
-// }
+function displayRes(array) {
+  let residents = []
+  array.forEach(resident => residents.push(<div key={resident}><span>{resident}</span><br /></div>))
+  return residents
+}
 
 function nameMerge(resident) {
   const first = resident.first_name
@@ -73,7 +75,7 @@ const LeaseInfo = (props) => {
 
     case "current":
       if (currentLease) {
-        const lessees = multiRes(currentLease.residents) //gives array of full names
+        const lessees = displayRes(multiRes(currentLease.residents)) //gives array of full names with JSX
         const rent = currentLease.rent
         const startDate = new Date(currentLease.start_date * 1000).toLocaleDateString()
         const endDate = new Date(currentLease.end_date * 1000).toLocaleDateString()
@@ -130,14 +132,25 @@ const LeaseInfo = (props) => {
           <div className="lease-info">
             <p><em>No active lease for this unit</em></p>
             <br /><br />
+            {/*
             <form onSubmit={props.handleCreateNewLease}>
-              <label htmlFor="start-date">Start date: </label>
-              <input type="date" name="newStartDate" id="start-date" onChange={props.handleDateChange} /><br />
-              <label htmlFor="end-date">End date: </label>
-              <input type="date" name="newEndDate" id="end-date" onChange={props.handleDateChange} /><br />
-              <label htmlFor="end-date">Rent: </label>
-              <input name="rent" placeholder="Rent" onChange={props.handleChange} value={props.rent}></input><br />
+              <label htmlFor="start-date">Start date</label>
+              <span>start date</span><br />
+              <input className="create-form-input" type="date" placeholder="Start Date" name="newStartDate" id="start-date" onChange={props.handleDateChange} />
+              <label htmlFor="end-date">End date</label>
+              <input className="create-form-input" type="date" name="newEndDate" id="end-date" onChange={props.handleDateChange} /><br />
+              <label htmlFor="end-date">Rent</label>
+              <input className="create-form-input" name="rent" placeholder="Rent" onChange={props.handleChange} value={props.rent}></input><br />
               <button type="submit">Create New Future Lease</button>
+            </form>
+            */}
+            <form onSubmit={props.handleCreateNewLease}>
+              <span>start date</span><br />
+              <input className="create-form-input" type="date" placeholder="Start Date" name="newStartDate" id="start-date" onChange={props.handleDateChange} /><br />
+              <span>end date</span><br />
+              <input className="create-form-input" type="date" name="newEndDate" id="end-date" onChange={props.handleDateChange} /><br />
+              <input className="create-form-input" name="rent" placeholder="Rent" onChange={props.handleChange} value={props.rent}></input><br />
+              <button className="button-create-lease" type="submit">Create New Future Lease</button>
             </form>
           </div>
         )

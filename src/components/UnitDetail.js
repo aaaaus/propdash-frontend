@@ -48,20 +48,25 @@ class UnitDetail extends React.Component {
     const nStatus = "future"
 
     if (nStart && nEnd && nRent) {
-        const nBody = {lease: {unit_id: nUnit, start_date: nStart, end_date: nEnd, rent: nRent, account_balance: nBalance, status: nStatus }}
-        fetch('http://localhost:4000/api/v1/leases', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(nBody)
+
+      const nBody = {lease: {unit_id: nUnit, start_date: nStart, end_date: nEnd, rent: nRent, account_balance: nBalance, status: nStatus }}
+
+      this.setState({
+        leaseType: 'future'
         })
-        .then(resp => resp.json())
-        .then(res => {
-          this.props.createLease(res); //sends to createLease action creators
-          // this.props.fetchLeases();
-        })
+
+      fetch('http://localhost:4000/api/v1/leases', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(nBody)
+      })
+      .then(resp => resp.json())
+      .then(res => {
+        this.props.createLease(res); //sends to createLease action creators
+      })
     }
   }
 

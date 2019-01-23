@@ -161,6 +161,7 @@ body {
 
 .detail-lease-button {
   text-align: center;
+  font-size: 16px;
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-color: #bcbcbc;
@@ -170,6 +171,7 @@ body {
 
 .detail-lease-button-active {
   text-align: center;
+  font-size: 16px;
   background-color: #fff;
 }
 
@@ -284,6 +286,43 @@ body {
   border-color: #bcbcbc;
 
   background-color: #fff;
+}
+
+/* create new lease form */
+
+.create-form-input {
+  width: 30%;
+  padding: 6px 10px;
+  margin: 8px 0;
+  /* box-sizing: border-box; */
+  /* border-bottom-style: solid; */
+  border-style: solid;
+  border-color: #aaa;
+}
+
+[type="date"] {
+  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+}
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.button-create-lease {
+  margin-top: 20px;
+  background: #79C753;
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  border: none;
+  /* text-shadow: 3px 2px 1px #9daef5;
+  /* font-family: Arial; */
+  color: #eee;
+  font-size: 14px;
+  padding: 7px 20px 7px 20px;
+  text-decoration: none;
 }
 
 /* FILTER CONTAINER */
