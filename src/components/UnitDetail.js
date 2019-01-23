@@ -181,9 +181,29 @@ class UnitDetail extends React.Component {
           <h4>{this.props.selectUnit.status}</h4>
 
           <div id="lease-info-container">
-            <div onClick={this.handleLeaseTypeChange} className={this.state.leaseType === 'past' ? "detail-lease-button-active" : "detail-lease-button" } id="leaseType-past">Past Leases</div>
-            <div onClick={this.handleLeaseTypeChange} className={this.state.leaseType === 'current' ? "detail-lease-button-active" : "detail-lease-button" } id="leaseType-current">Current Lease</div>
-            <div onClick={this.handleLeaseTypeChange} className={this.state.leaseType === 'future' ? "detail-lease-button-active" : "detail-lease-button" } id="leaseType-future">Future Lease</div>
+            <div
+              onClick={this.handleLeaseTypeChange}
+              className={this.state.leaseType === 'past' ? "detail-lease-button-active" : "detail-lease-button" }
+              id="leaseType-past"
+            >
+              <span className="lease-button-text">Past Leases</span>
+            </div>
+
+            <div
+              onClick={this.handleLeaseTypeChange}
+              className={this.state.leaseType === 'current' ? "detail-lease-button-active" : "detail-lease-button" }
+              id="leaseType-current"
+            >
+              <span className="lease-button-text">Current Lease</span>
+            </div>
+
+            <div
+              onClick={this.handleLeaseTypeChange}
+              className={this.state.leaseType === 'future' ? "detail-lease-button-active" : "detail-lease-button" }
+              id="leaseType-future"
+            >
+              <span className="lease-button-text">Future Lease</span>
+            </div>
 
             {this.leaseInfoRender()}
           </div>

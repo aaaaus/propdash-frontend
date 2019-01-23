@@ -33,7 +33,7 @@ const LeaseInfo = (props) => {
       } else {
         return (
           <div id="past" className="lease-info">
-            <p className="no-lease-span">"NO PAST LEASES"</p>
+            <span className="no-lease-span">"NO PAST LEASES"</span>
           </div>
         )
       }
