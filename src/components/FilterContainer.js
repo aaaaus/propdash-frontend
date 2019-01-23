@@ -9,26 +9,28 @@ const FilterContainer = (props) => {
 
   return (
     <div id="filterContainer">
-      <h4 className="helper">FilterContainer</h4>
+
+      <span>Data Views</span><br />
 
       <button className="button-test" id="status" onClick={props.dataSelect}>Status</button>
-      <button className="ui button" id="rent" onClick={props.dataSelect}>Rent</button>
-      <button className="ui button" id="ppsf" onClick={props.dataSelect}>$PSF</button>
-      <button className="ui button" id="vacant" onClick={props.dataSelect}>Days Vacant</button>
-      <button className="ui button" id="market" onClick={props.dataSelect}>Market Rent</button>
-      <button className="ui button" id="diff" onClick={props.dataSelect}>Market Rent %Diff</button>
-      <button className="ui button" id="lines" onClick={props.dataSelect}>Lines</button>
+      <button className="button-test" id="rent" onClick={props.dataSelect}>Rent</button>
+      <button className="button-test" id="ppsf" onClick={props.dataSelect}>$PSF</button>
+      <button className="button-test" id="vacant" onClick={props.dataSelect}>Days Vacant</button>
+      <button className="button-test" id="market" onClick={props.dataSelect}>Market Rent</button>
+      <button className="button-test" id="diff" onClick={props.dataSelect}>Market Rent %Diff</button>
+      <button className="button-test" id="lines" onClick={props.dataSelect}>Lines</button>
       <br />
+      <span>Filters</span>
       <br />
       <button className="filter-button" id={props.filterOccStatus? "filter-occupied-on" : "filter-occupied-off"} onClick={props.filterOccupied}>Occupied</button>
       <button className="filter-button" id={props.filterNotStatus? "filter-notice-on" : "filter-notice-off"} onClick={props.filterNotice}>Notice</button>
       <button className="filter-button" id={props.filterVacStatus? "filter-vacant-on" : "filter-vacant-off"} onClick={props.filterVacant}>Vacant</button>
       <input
+        id="tenant-search-input"
         onChange={props.handleInput}
         value={props.filterText}
         type="text"
         placeholder="Tenant name"
-        style={{width: "250px"}}
       >
       </input>
 

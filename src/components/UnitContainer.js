@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FlipMove from 'react-flip-move';
 
-import './UnitContainer.css';
-
 import { fetchUnits, fetchLeases, fetchResidents, selectUnit } from '../actions';
 import Unit from './Unit';
 
@@ -36,7 +34,11 @@ class UnitContainer extends React.Component {
         </FlipMove>
       )
     } else {
-      return <span id="select-a-property">Select a property...</span>
+      return (
+        <div id="select-a-property-div">
+          <span id="select-a-property">Select a property</span>
+        </div>
+      )
     }
 
   }
@@ -183,9 +185,9 @@ class UnitContainer extends React.Component {
     return(
       <div id="unit-container">
         <div id="sort-button-container">
-          <h4 className="helper">UnitContainer</h4>
-          <button id="sort-number" className="button-test" onClick={this.handleSortBy}>Sort By Unit</button>
-          <button id="sort-end_date" className="button-test" onClick={this.handleSortBy}>Sort By Lease End Date</button>
+          <span>Sort by:</span><br />
+          <button id="sort-number" className="button-test" onClick={this.handleSortBy}>Unit</button>
+          <button id="sort-end_date" className="button-test" onClick={this.handleSortBy}>End Date</button>
         </div>
         <div className="grid clearfix">
           {this.renderUnits()}
