@@ -32,7 +32,7 @@ const LeaseInfo = (props) => {
     case "past":
       if (pastLeases.length > 0) {
 
-        const lessees = multiRes(pastLeases[0].residents)
+        const lessees = displayRes(multiRes(pastLeases[0].residents))
         const rent = pastLeases[0].rent
         const startDate = new Date(pastLeases[0].start_date * 1000).toLocaleDateString()
         const endDate = new Date(pastLeases[0].end_date * 1000).toLocaleDateString()
@@ -48,7 +48,7 @@ const LeaseInfo = (props) => {
                   <th>Lease Term</th>
                 </tr>
                 <tr>
-                  <td>{lessees}</td>
+                  <td>{lessees.map(resident => resident)}</td>
                   <td>{startDate} - {endDate}</td>
                 </tr>
                 <tr>
@@ -134,7 +134,7 @@ const LeaseInfo = (props) => {
       } else {
         return (
           <div className="lease-info">
-            <p><em>No active lease for this unit - REAL THING</em></p>
+            <p><em>No active lease for this unit</em></p>
             <br /><br />
             {/*
             <form onSubmit={props.handleCreateNewLease}>

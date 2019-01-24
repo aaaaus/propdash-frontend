@@ -185,7 +185,7 @@ class UnitContainer extends React.Component {
     return(
       <div id="unit-container">
         <div id="sort-button-container">
-          <span>Sort by:</span><br />
+          <span className="filter-headers">Sort by:</span><br />
           <button id="sort-number" className="button-test" onClick={this.handleSortBy}>Unit</button>
           <button id="sort-end_date" className="button-test" onClick={this.handleSortBy}>End Date</button>
         </div>

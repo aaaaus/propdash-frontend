@@ -49,10 +49,42 @@ export default class ApiAdapter {
     .then(res => res.json())
   }
 
+  //creates
+
+  static postLease(object) {
+    return fetch(`${LEASE_URL}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(object)
+    })
+    .then(resp => resp.json())
+  }
+
+  //create resLease association
+
+  static postResLease(object) {
+    return fetch(`${RESIDENT_URL}`, { //UPDATE URL//////////////////////
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(object)
+    })
+    .then(resp => resp.json())
+  }
+
   static updateUnitStatus(unitId, status) {
     return fetch(`${UNIT_URL}${unitId}`, {
       method: 'PATCH',
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Accept': 'application/json', 'Content-Type': 'application/json'},
       body: JSON.stringify({status: status})
     })
     .then(resp => resp.json())
@@ -61,7 +93,9 @@ export default class ApiAdapter {
   static updateLeaseStatus(leaseId, status) {
     return fetch(`${LEASE_URL}${leaseId}`, {
       method: 'PATCH',
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Accept': 'application/json', 'Content-Type': 'application/json'},
       body: JSON.stringify({status: status})
     })
     .then(resp => resp.json())

@@ -46,12 +46,9 @@ class UnitDetail extends React.Component {
     return this.setState({ tenant2id: e.value })
   }
 
-  //refactor later to do it the 'React' way
   handleCreateNewLease = (e) => {
     e.preventDefault()
 
-    const tenant1 = this.state.tenant1id
-    const tenant2 = this.state.tenant2id
     const nUnit = this.props.selectUnit.id
     const nStart = this.state.newStartDate
     const nEnd = this.state.newEndDate
@@ -59,28 +56,16 @@ class UnitDetail extends React.Component {
     const nBalance = 0
     const nStatus = "future"
 
-    debugger
-
     if (nStart && nEnd && nRent) {
 
       const nBody = {lease: {unit_id: nUnit, start_date: nStart, end_date: nEnd, rent: nRent, account_balance: nBalance, status: nStatus }}
-      const joinBody = {resLease: {resident_id: tenant1 }} //res.id below gives new lease ID
+      //const joinBody = {resLease: {resident_id: tenant1 }} //res.id below gives new lease ID
+
+      //send to redux
+      this.props.createLease(nBody)
 
       this.setState({
         leaseType: 'future'
-        })
-
-      fetch('http://localhost:4000/api/v1/leases', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(nBody)
-      })
-      .then(resp => resp.json())
-      .then(res => {
-        this.props.createLease(res); //sends to createLease action creators //send nBody and two IDs
       })
     }
   }
@@ -88,15 +73,24 @@ class UnitDetail extends React.Component {
   handleMoveIn = (e) => {
     e.preventDefault()
 
+    const tenant1id = this.state.tenant1id
+    const tenant2id = this.state.tenant2id
     const unit = this.props.selectUnit
     const lease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "future")[0]
 
-    //send to redux
-    this.props.moveInOut(unit.id, "occupied", lease.id, "current")
+    // if (tenant1id) {
 
-    this.setState({
-      leaseType: 'current'
-    })
+      this.props.moveInOut(unit.id, "occupied", lease.id, "current")
+
+      // this.props.createResLease(tenant1id, lease.id)
+      // if (this.state.tenant2id) {
+      //   this.props.createResLease(tenant2id, lease.id)
+      // }
+
+      this.setState({
+        leaseType: 'current'
+      })
+    // }
   }
 
   handleMoveOut = (e) => {
@@ -171,6 +165,19 @@ class UnitDetail extends React.Component {
       const futureLease = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "future")[0]
       const pastLeases = this.props.leases.filter(lease => lease.unit_id === this.props.selectUnit.id && lease.status === "past")
 
+      let unitType = ''
+
+      if (unit.layout_type === "studio") {
+        unitType = "Studio"
+      }
+      else if (unit.layout_type === "1_bed") {
+        unitType = "1 Bedroom"
+      }
+      else {
+        unitType = "2 Bedroom"
+      }
+
+
       // if (!currentLease) {
       if (currentLease === 100) {
         // console.log("UNIT DETAIL STATE IS: ", this.state);
@@ -203,7 +210,7 @@ class UnitDetail extends React.Component {
 
           <div id="lease-title-container">
             <h2>Apartment {this.props.selectUnit.number}</h2>
-            <h4>{this.props.selectUnit.status}</h4>
+            <p className="lease-title-text">{unitType}</p><br />
           </div>
 
           <div id="lease-info-container">
@@ -234,11 +241,13 @@ class UnitDetail extends React.Component {
             {this.leaseInfoRender()}
           </div>
 
+          {/*
           <div id="unit-info-container">
             <h4>Unit Info</h4>
             <span>Amenities: </span><br />
             <span><a href='/api/v1/print/example.pdf' target='_blank'>Floorplan (PDF)</a></span>
           </div>
+          */}
         </div>
       ) //return
 

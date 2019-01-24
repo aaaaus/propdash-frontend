@@ -78,6 +78,16 @@ export const selectLease = (lease) => {
   }
 };
 
+export function createLease(object) {
+
+  return (dispatch) => {
+    ApiAdapter.postLease(object)
+    .then(resp => {
+      dispatch({ type: "CREATE_LEASE", payload: resp })
+    })
+  }
+}
+
 export function moveInOut(unitId, unitStatus, leaseId, leaseStatus) {
   return (dispatch) => {
     ApiAdapter.updateUnitStatus(unitId, unitStatus)
@@ -102,6 +112,15 @@ export function fetchResidents() {
       dispatch({ type: "UPDATE_RESIDENTS", payload: residentData })
       dispatch({ type: "FETCHED_RESIDENTS" })
     })
+  }
+}
+
+export function createResLease(tenant1id, leaseId) {
+  return (dispatch) => {
+    debugger
+    const joinBody = {resLease: {resident_id: tenant1id, lease_id: leaseId }}
+    ApiAdapter.postResLease(joinBody)
+    .then()
   }
 }
 
@@ -147,15 +166,6 @@ export const handleInput = (event) => {
   return {
     type: 'INPUT_CHANGE',
     payload: event.target.value
-  }
-}
-
-//CREATE LEASE
-
-export const createLease = (resp) => { //turn this into function, pass resident_id argument, dispatch also to resident reducer to hit custom route for reslease generation
-  return {
-    type: 'CREATE_LEASE',
-    payload: resp
   }
 }
 

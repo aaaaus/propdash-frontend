@@ -10,7 +10,7 @@ const FilterContainer = (props) => {
   return (
     <div id="filterContainer">
 
-      <span>Data Views</span><br />
+      <span className="filter-headers">Data Views</span><br />
 
       <button className="button-test" id="status" onClick={props.dataSelect}>Status</button>
       <button className="button-test" id="rent" onClick={props.dataSelect}>Rent</button>
@@ -20,7 +20,7 @@ const FilterContainer = (props) => {
       <button className="button-test" id="diff" onClick={props.dataSelect}>Market Rent %Diff</button>
       <button className="button-test" id="lines" onClick={props.dataSelect}>Lines</button>
       <br />
-      <span>Filters</span>
+      <span className="filter-headers">Filters</span>
       <br />
       <button className="filter-button" id={props.filterOccStatus? "filter-occupied-on" : "filter-occupied-off"} onClick={props.filterOccupied}>Occupied</button>
       <button className="filter-button" id={props.filterNotStatus? "filter-notice-on" : "filter-notice-off"} onClick={props.filterNotice}>Notice</button>
