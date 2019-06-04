@@ -12,6 +12,8 @@ const propertyReducer = (state = initialState, action) => {
       return { ...state, isLoaded: true };
     case "SELECT_PROPERTY":
       return { ...state, selectProperty: action.payload };
+    case "LOGOUT_USER":
+      return { ...state, ...initialState };
     default:
       return state;
   }

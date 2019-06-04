@@ -1,65 +1,11 @@
 body {
-  margin:0;
+  margin: 0;
   padding-top: 0vh;
 }
 
 .helper {
   color: cyan;
 }
-
-#nav-div {
-  display: grid;
-  box-sizing: border-box;
-  position: fixed;
-  height: 5vh;
-  width: 100vw;
-  z-index: 10;
-
-  grid-template: 100% / repeat(3, 1fr);
-
-  background-color: #fff;
-  border-bottom-color: #bcbcbc;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-}
-
-  #nav-sub-1 {
-    grid-area: 1 / 1 / 2 / 2;
-    text-align: left;
-  }
-
-  #nav-sub-2 {
-    grid-area: 1 / 2 / 2 / 3;
-    text-align: center;
-    vertical-align: text-bottom;
-    font-family: 'PT Mono', monospace;
-    font-size: 40px;
-  }
-
-  #nav-sub-3 {
-    grid-area: 1 / 3 / 2 / 4;
-    text-align: right;
-  }
-
-  .nav-span-1 {
-    display: inline-block;
-    margin-top: 15px;
-    margin-left: 5px;
-    color: dodgerblue;
-  }
-
-  .nav-span-2 {
-    display: inline-block;
-    margin-top: 15px;
-    color: dodgerblue;
-  }
-
-  .nav-span-3 {
-    display: inline-block;
-    margin-top: 15px;
-    margin-right: 5px;
-    color: dodgerblue;
-  }
 
 #nav-offset {
   height: 5vh;
@@ -104,17 +50,14 @@ body {
   background-color: #eee;
 }
 
-  #filterContainer {
-    text-align: center;
-    min-height: 15vh;
-  }
+#filterContainer {
+  text-align: center;
+  min-height: 15vh;
+}
 
-  #unit-container {
-    min-height: 80vh;
-  }
-
-
-
+#unit-container {
+  min-height: 80vh;
+}
 
 /* SIDEBAR */
 
@@ -260,7 +203,7 @@ body {
 
 .button-toggle-notice {
   margin-top: 20px;
-  background: #FE840E;
+  background: #fe840e;
   -webkit-border-radius: 5;
   -moz-border-radius: 5;
   border-radius: 5px;
@@ -275,7 +218,7 @@ body {
 
 .button-move-out {
   margin-top: 20px;
-  background: #BD3D3A;
+  background: #bd3d3a;
   -webkit-border-radius: 5;
   -moz-border-radius: 5;
   border-radius: 5px;
@@ -290,7 +233,7 @@ body {
 
 .button-move-in {
   margin-top: 20px;
-  background: #79C753;
+  background: #79c753;
   -webkit-border-radius: 5;
   -moz-border-radius: 5;
   border-radius: 5px;
@@ -326,7 +269,9 @@ body {
 }
 
 [type="date"] {
-  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+  background: #fff
+    url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)
+    97% 50% no-repeat;
 }
 [type="date"]::-webkit-inner-spin-button {
   display: none;
@@ -337,7 +282,7 @@ body {
 
 .button-create-lease {
   margin-top: 20px;
-  background: #79C753;
+  background: #79c753;
   -webkit-border-radius: 5;
   -moz-border-radius: 5;
   border-radius: 5px;
@@ -352,25 +297,27 @@ body {
 
 /* FILTER CONTAINER */
 
-button:focus {outline:0;}
+button:focus {
+  outline: 0;
+}
 
 .button-test {
-margin: 0 3px 0 3px;
-background: #969696;
-/* background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);
+  margin: 0 3px 0 3px;
+  background: #969696;
+  /* background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);
 background-image: -moz-linear-gradient(top, #eb94d0, #2079b0);
 background-image: -ms-linear-gradient(top, #eb94d0, #2079b0);
 background-image: -o-linear-gradient(top, #eb94d0, #2079b0);
 background-image: linear-gradient(to bottom, #eb94d0, #2079b0); */
--webkit-border-radius: 5;
+  -webkit-border-radius: 5;
   -moz-border-radius: 5;
   border-radius: 5px;
-border: none;
-/* text-shadow: 3px 2px 1px #9daef5;
+  border: none;
+  /* text-shadow: 3px 2px 1px #9daef5;
   -webkit-box-shadow: 6px 5px 24px #666666;
   -moz-box-shadow: 6px 5px 24px #666666;
   box-shadow: 6px 5px 24px #666666; */
-/* font-family: Arial; */
+  /* font-family: Arial; */
   color: #eee;
   font-size: 14px;
   padding: 7px 20px 7px 20px;
@@ -382,21 +329,25 @@ border: none;
   color: #fff;
 }
 
-.button-test:active:focus { background: #555}
+.button-test:active:focus {
+  background: #555;
+}
 
-.button-test:focus { background: #777}
+.button-test:focus {
+  background: #777;
+}
 
 .filter-button {
   box-sizing: border-box;
-/* background: #eb94d0; */
--webkit-border-radius: 5;
+  /* background: #eb94d0; */
+  -webkit-border-radius: 5;
   -moz-border-radius: 5;
   border-radius: 5px;
-/* text-shadow: 3px 2px 1px #9daef5;
+  /* text-shadow: 3px 2px 1px #9daef5;
   -webkit-box-shadow: 6px 5px 24px #666666;
   -moz-box-shadow: 6px 5px 24px #666666;
   box-shadow: 6px 5px 24px #666666; */
-/* font-family: Arial; */
+  /* font-family: Arial; */
   /* color: #fafafa; */
   font-size: 14px;
   padding: 10px 20px 10px 20px;
@@ -405,41 +356,41 @@ border: none;
 }
 
 #filter-occupied-on {
-  border-color: #FFD662;
+  border-color: #ffd662;
   border-width: 3px;
-  background: #FFD662;
+  background: #ffd662;
   color: #4f4f4f;
 }
 
 #filter-occupied-off {
-  border-color: #FFD662;
+  border-color: #ffd662;
   border-width: 3px;
   background: #fff;
   color: #4f4f4f;
 }
 
 #filter-notice-on {
-  border-color: #FE840E;
+  border-color: #fe840e;
   border-width: 3px;
-  background: #FE840E;
+  background: #fe840e;
   color: #fafafa;
 }
 #filter-notice-off {
-  border-color: #FE840E;
+  border-color: #fe840e;
   border-width: 3px;
   background: #fff;
   color: #4f4f4f;
 }
 
 #filter-vacant-on {
-  border-color: #00539C;
+  border-color: #00539c;
   border-width: 3px;
-  background: #00539C;
+  background: #00539c;
   color: #fafafa;
 }
 
 #filter-vacant-off {
-  border-color: #00539C;
+  border-color: #00539c;
   border-width: 3px;
   background: #fff;
   color: #4f4f4f;
@@ -459,9 +410,8 @@ border: none;
   margin-top: 5px;
   color: #989898;
   font-size: 18px;
-  font-family: 'EB Garamond', serif;
+  font-family: "EB Garamond", serif;
 }
-
 
 /* UNIT CONTAINER */
 
@@ -509,7 +459,7 @@ border: none;
 }
 
 .unit-div:hover {
-  opacity: 0.5
+  opacity: 0.5;
 }
 
 /* .unit-div > span {
@@ -520,12 +470,24 @@ border: none;
   font-size: 20px;
 }
 
-.unit-div.occupied        { background: #FFD662 }
-.unit-div.occupied > span { color: #010101 }
-.unit-div.notice          { background: #FE840E }
-.unit-div.notice > span   { color: #fafafa }
-.unit-div.vacant          { background: #00539C }
-.unit-div.vacant > span   { color: #fafafa }
+.unit-div.occupied {
+  background: #ffd662;
+}
+.unit-div.occupied > span {
+  color: #010101;
+}
+.unit-div.notice {
+  background: #fe840e;
+}
+.unit-div.notice > span {
+  color: #fafafa;
+}
+.unit-div.vacant {
+  background: #00539c;
+}
+.unit-div.vacant > span {
+  color: #fafafa;
+}
 
 /* .unit-div.occupied    { background: #dfffdb; background: hsl(   113, 100%, 93%); }
 .unit-div.notice      { background: #ffaf54; background: hsl(  32, 100%, 66%); }

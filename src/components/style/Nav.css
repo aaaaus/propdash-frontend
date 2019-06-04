@@ -1,0 +1,65 @@
+#nav-div {
+  display: grid;
+  box-sizing: border-box;
+  position: fixed;
+  height: 5vh;
+  width: 100vw;
+  z-index: 10;
+
+  grid-template: 100% / repeat(3, 1fr);
+
+  background-color: #fff;
+  border-bottom-color: #bcbcbc;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+#nav-sub-1 {
+  grid-area: 1 / 1 / 2 / 2;
+  text-align: left;
+}
+
+#nav-sub-2 {
+  grid-area: 1 / 2 / 2 / 3;
+  text-align: center;
+  vertical-align: text-bottom;
+  font-family: "PT Mono", monospace;
+  font-size: 40px;
+}
+
+#nav-sub-3 {
+  grid-area: 1 / 3 / 2 / 4;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.nav-span-1 {
+  display: inline-block;
+  margin-top: 15px;
+  margin-left: 5px;
+  color: dodgerblue;
+}
+
+.nav-span-2 {
+  display: inline-block;
+  margin-top: 15px;
+  color: dodgerblue;
+}
+
+.nav-span-3 {
+  display: inline-block;
+  margin-top: 15px;
+  margin-right: 20px;
+  color: dodgerblue;
+}
+
+.logoutButton {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.logoutButton:hover {
+  color: white;
+  background-color: #444;
+}

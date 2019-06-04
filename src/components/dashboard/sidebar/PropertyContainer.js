@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { fetchProperties, selectProperty } from "../actions";
+import { fetchProperties, selectProperty } from "../../../actions";
 import Property from "./Property";
 
 class PropertyContainer extends React.Component {
