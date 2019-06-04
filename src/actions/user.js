@@ -67,7 +67,6 @@ export const failedLogin = errorMsg => ({
 });
 
 export const logoutUser = () => {
-  localStorage.clear();
   return {
     type: "LOGOUT_USER"
   };

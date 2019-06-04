@@ -13,6 +13,12 @@ class Nav extends React.Component {
     console.log("button clicked");
   }
 
+  handleClick = event => {
+    event.preventDefault();
+    localStorage.removeItem("jwt");
+    this.props.logoutUser();
+  };
+
   render() {
     console.log("NAV props:", this.props);
     return (
@@ -25,7 +31,7 @@ class Nav extends React.Component {
         </div>
         <div id="nav-sub-3">
           <span className="nav-span-3">{this.renderGreeting()}</span> |
-          <button onClick={this.props.logoutUser}>Logout</button>
+          <button onClick={this.handleClick}>Logout</button>
         </div>
       </div>
     );
