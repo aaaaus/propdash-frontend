@@ -1,67 +1,67 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { withRouter, Redirect } from 'react-router'
-import { loginUser } from '../actions/user'
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter, Redirect } from "react-router";
+import { loginUser } from "../actions/user";
 // import { Button, Form, Segment, Message } from 'semantic-ui-react'
 
 class LoginForm extends React.Component {
-  state = { username: '', password: '' }
+  state = { username: "", password: "" };
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-  handleLoginSubmit = (e) => { //semantic forms preventDefault for you
-    e.preventDefault()
-    this.props.loginUser(this.state.username, this.state.password) //comes from mapDispatchToProps
-    this.setState({ username: '', password: '' }) //reset form to initial state
-  }
+  handleLoginSubmit = e => {
+    e.preventDefault();
+    this.props.loginUser(this.state.username, this.state.password); //comes from mapDispatchToProps
+    this.setState({ username: "", password: "" }); //reset form to initial state
+  };
 
   render() {
-    console.log('%c LOGIN FORM PROPS: ', 'color: red', this.props)
+    // console.log("%c LOGIN FORM PROPS: ", "color: red", this.props);
     return this.props.loggedIn ? (
       <Redirect to="/dash" />
     ) : (
-      <div>
+      <div style={{ border: "2px red solid", padding: "20px" }}>
         <form
-         onSubmit={this.handleLoginSubmit}
-         // loading={this.props.authenticatingUser}
-         // error={this.props.failedLogin}
-         >
+          onSubmit={this.handleLoginSubmit}
+          // loading={this.props.authenticatingUser}
+          // error={this.props.failedLogin}
+        >
           <input
-             label="username"
-             placeholder="username"
-             name="username"
-             onChange={this.handleChange}
-             value={this.state.username} />
+            label="username"
+            placeholder="username"
+            name="username"
+            onChange={this.handleChange}
+            value={this.state.username}
+          />
           <input
-             type="password"
-             label="password"
-             placeholder="password"
-             name="password"
-             onChange={this.handleChange}
-             value={this.state.password} />
+            type="password"
+            label="password"
+            placeholder="password"
+            name="password"
+            onChange={this.handleChange}
+            value={this.state.password}
+          />
           <button type="submit">Login</button>
         </form>
       </div>
-    )
-  }//end render
-
+    );
+  } //end render
 } //end class
 
-const mapStateToProps = (reduxState) => {
+const mapStateToProps = state => {
   return {
-    authenticatingUser: reduxState.users.authenticatingUser,
-    failedLogin: reduxState.users.failedLogin,
-    error: reduxState.users.error,
-    loggedIn: reduxState.users.loggedIn
-  }
-}
+    authenticatingUser: state.users.authenticatingUser,
+    failedLogin: state.users.failedLogin,
+    error: state.users.error,
+    loggedIn: state.users.loggedIn
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loginUser: (username, password) => dispatch(loginUser(username, password))
-  }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { loginUser }
+  )(LoginForm)
+);
